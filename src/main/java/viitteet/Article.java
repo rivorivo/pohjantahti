@@ -10,7 +10,8 @@ package viitteet;
  * @author jphanski
  */
 public class Article extends Viite{
-    private static final String[] kentat = {"Author", "Title", "Journal", "Year", "Volume"};
+    private static final String[] kentat = {"Author", "Title", "Journal", "Year", "Volume", "Number", "Pages", "Month", "Note", "Key"};
+    private static final boolean[] pakollisuus = {true, true, true, true, true, false, false, false, false, false};
     private String[] avaimet;
     
     public Article() {
@@ -39,6 +40,16 @@ public class Article extends Viite{
             palautus += kentat[i] + ": " + ((avaimet[i] == null) ? "Not set" : avaimet[i]) + "\n";           
         }
         return palautus;
+    }
+
+    @Override
+    public boolean onkoPakollinen(String kentanNimi) {
+        for (int i = 0; i<kentat.length; i++) {
+            if (kentat[i].compareTo(kentanNimi) == 0) {
+                if (pakollisuus[i]) return true;
+            }
+        }
+        return false;
     }
     
 }

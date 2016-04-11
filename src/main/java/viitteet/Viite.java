@@ -25,6 +25,15 @@ public abstract class Viite {
      * @param avain Uusi arvo.
      */
     public abstract void lisaaTieto(String kentanNimi, String avain);
+    
+    /**
+     * Palauttaa true mikäli kentanNimi-niminen kenttä on pakollinen.
+     * Mikäli kenttää ei määritelty, se ei ole pakollinen.
+     * @param kentanNimi
+     * @return 
+     */
+    public abstract boolean onkoPakollinen(String kentanNimi);
+    
     @Override
     /**
      * Printtaa BibTeX-formaatissa viitteen tiedot.
