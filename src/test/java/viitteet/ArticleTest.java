@@ -54,6 +54,14 @@ public class ArticleTest {
         assertEquals("0", avain[0]);
     }
     
+    @Test
+    public void lueTietoTest() {
+        String[] kentat = article.kentat();
+        String[] avain = article.getAvaimet();
+        article.lisaaTieto("author", "0");
+        assertEquals(null, article.lueTieto("koira"));
+    }
+    
     
     
 }
