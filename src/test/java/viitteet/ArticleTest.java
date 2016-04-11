@@ -64,13 +64,18 @@ public class ArticleTest {
     }
     
     @Test
-    public void lueTietoTest() {
+    public void lueTietoTestPalauttaaNullJosTietoEiLoydy() {
         String[] kentat = article.kentat();
         String[] avain = article.getAvaimet();
         article.lisaaTieto("author", "0");
         assertEquals(null, article.lueTieto("koira"));
     }
     
+    
+    @Test
+    public void toStringOikeassaMuodossa() {
+        
+    }
     
     
 }
