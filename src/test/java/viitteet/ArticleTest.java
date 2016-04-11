@@ -36,4 +36,18 @@ public class ArticleTest {
         }
         
     }
+    
+    @Test
+    public void llisaaTietoToimiiOikein() {
+        String[] kentat = article.kentat();
+        String[] avain = article.getAvaimet();
+        article.lisaaTieto("Author", "0");
+        assertTrue(avain[0] == "0");
+    }
+    
+    /*@Test
+    public void lueTietoToimiiOikein() {
+        
+    }
+    */
 }
