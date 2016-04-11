@@ -42,7 +42,16 @@ public class ArticleTest {
         String[] kentat = article.kentat();
         String[] avain = article.getAvaimet();
         article.lisaaTieto("author", "0");
-        assertTrue(avain[0] == "0");
+        assertTrue("0" == avain[0]);
+    }
+    
+    @Test
+    public void lisaaTietoEiTeeMitaanJosTietoLoytyyJo() {
+        String[] kentat = article.kentat();
+        String[] avain = article.getAvaimet();
+        article.lisaaTieto("author", "0");
+        article.lisaaTieto("author", "1");
+        assertTrue(null == avain[1]);
     }
     
     @Test
@@ -54,6 +63,19 @@ public class ArticleTest {
         assertEquals("0", avain[0]);
     }
     
+    @Test
+    public void lueTietoTestPalauttaaNullJosTietoEiLoydy() {
+        String[] kentat = article.kentat();
+        String[] avain = article.getAvaimet();
+        article.lisaaTieto("author", "0");
+        assertEquals(null, article.lueTieto("koira"));
+    }
+    
+    
+    @Test
+    public void toStringOikeassaMuodossa() {
+        
+    }
     
     
 }
