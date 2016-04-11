@@ -21,7 +21,7 @@ public class App {
         while (true) {
             komentoNoCapitalizationChanges = reader.nextLine();
             komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
-            if (komento.startsWith("luo-viite")) {
+            if (komento.startsWith("luo-viite")) {                  //luo-viite <viitteen tyyppi>
                 if (komento.startsWith("luo-viite article")) {
                     System.out.println("= ");
                     viitteet.add(new Article());
@@ -30,11 +30,11 @@ public class App {
                 else {
                     System.out.println("? ");
                 }
-            } else if (komento.startsWith("tulosta-viite")) {
+            } else if (komento.startsWith("tulosta-viite")) {       //tulosta-viite <viitteen numero>
                 int viitteenNumero = Integer.parseInt(komento.substring(14)) - 1;
                 System.out.println("= ");
                 System.out.println(viitteet.get(viitteenNumero));
-            } else if (komento.startsWith("aseta-kentta")) { // aseta-kentta <viitteen numero> <kentan nimi> <arvo>
+            } else if (komento.startsWith("aseta-kentta")) {        // aseta-kentta <viitteen numero> <kentan nimi> <arvo>
                 int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
                 viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komentoNoCapitalizationChanges.split(" ", 4)[3]);
                 System.out.println("= ");
