@@ -17,9 +17,11 @@ public class App {
             komento = reader.nextLine();
             komento = komento.toUpperCase(Locale.ROOT);
             if (komento.startsWith("FIRST COMMAND")) {
+                System.out.println("= ");
                 //Juttuja
 
             } else if (komento.startsWith("SECOND_COMMAND")) {
+                System.out.println("= ");
                 //Muita juttuja
             } else {
                 System.out.println("? ");
