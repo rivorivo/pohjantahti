@@ -23,6 +23,10 @@ public class Article extends Viite{
         return kentat;
     }
 
+    public String[] getAvaimet() {
+        return avaimet;
+    }
+
     @Override
     public void lisaaTieto(String kentanNimi, String avain) {
         for (int i = 0; i < kentat.length; i++) {
