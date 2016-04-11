@@ -44,7 +44,9 @@ public abstract class Viite {
      * 
      * @return Tämän olion kentät ja niiden sisällöt BibTeX-yhteensopivassa muodossa. 
      */
-    public abstract String luoBibTeX();
+    public String luoBibTeX() {
+        return null;
+    }
     @Override
     public abstract String toString();    
 }

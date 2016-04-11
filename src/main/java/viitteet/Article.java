@@ -51,10 +51,5 @@ public class Article extends Viite{
         }
         return false;
     }
-
-    @Override
-    public String luoBibTeX() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }
