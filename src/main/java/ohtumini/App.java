@@ -16,10 +16,11 @@ public class App {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         String komento;
+        String komentoNoCapitalizationChanges;
         LinkedList<Viite> viitteet = new LinkedList<>();        
         while (true) {
-            komento = reader.nextLine();
-            komento = komento.toLowerCase(Locale.ROOT);
+            komentoNoCapitalizationChanges = reader.nextLine();
+            komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
             if (komento.startsWith("luo-viite")) {
                 if (komento.startsWith("luo-viite article")) {
                     System.out.println("= ");
@@ -35,7 +36,7 @@ public class App {
                 System.out.println(viitteet.get(viitteenNumero));
             } else if (komento.startsWith("aseta-kentta")) { // aseta-kentta <viitteen numero> <kentan nimi> <arvo>
                 int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
-                viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komento.split(" ", 4)[3]);
+                viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komentoNoCapitalizationChanges.split(" ", 4)[3]);
                 System.out.println("= ");
             } else {
                 System.out.println("? ");
