@@ -5,6 +5,7 @@
  */
 package ohtumini;
 
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 import viitteet.Article;
@@ -15,18 +16,26 @@ public class App {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         String komento;
-        Viite viite = new Article();
+        LinkedList<Viite> viitteet = new LinkedList<>();        
         while (true) {
             komento = reader.nextLine();
             komento = komento.toLowerCase(Locale.ROOT);
             if (komento.startsWith("luo-viite")) {
-                System.out.println("= ");
-                viite = new Article();                
-
+                if (komento.startsWith("luo-viite article")) {
+                    System.out.println("= ");
+                    viitteet.add(new Article());
+                    System.out.println(viitteet.size());
+                }
+                else {
+                    System.out.println("? ");
+                }
             } else if (komento.startsWith("tulosta-viite")) {
+                int viitteenNumero = Integer.parseInt(komento.substring(14)) - 1;
                 System.out.println("= ");
-                System.out.println(viite);
-            } else if (komento.startsWith("tyhja-komento")) {
+                System.out.println(viitteet.get(viitteenNumero));
+            } else if (komento.startsWith("aseta-kentta")) { // aseta-kentta <viitteen numero> <kentan nimi> <arvo>
+                int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
+                viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komento.split(" ", 4)[3]);
                 System.out.println("= ");
             } else {
                 System.out.println("? ");
