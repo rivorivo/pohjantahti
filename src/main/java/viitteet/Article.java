@@ -10,10 +10,23 @@ package viitteet;
  * @author jphanski
  */
 public class Article extends Viite{
+    /**
+     * Kentät jotka tämä viitetyyppi muistaa, nimettyinä.
+     */
     private static final String[] kentat = {"Author", "Title", "Journal", "Year", "Volume", "Number", "Pages", "Month", "Note", "Key"};
+    /**
+     * Merkitsee onko vastaava kentta pakollinen. True, jos on pakollinen, false jos ei pakollinen.
+     * kentat[0] on pakollinen mikäli pakollisuus[0] on true.
+     */
     private static final boolean[] pakollisuus = {true, true, true, true, true, false, false, false, false, false};
+    /**
+     * Varsinaiset avaimet, String-muodossa. Saattavat olla null.
+     */
     private String[] avaimet;
     
+    /**
+     * Luo uuden Artikkeliviitteen.
+     */
     public Article() {
         avaimet = new String[kentat.length];
     }
@@ -22,8 +35,13 @@ public class Article extends Viite{
     public String[] kentat() {
         return kentat;
     }
-
-    public String[] getAvaimet() {
+    
+    /**
+     * Palauttaa tämän viitteen avaimet listattuna. Järjestys on sama kuin
+     * kentat()-metodin palauttamassa listassa.
+     * @return Viitteen avaimet String-listassa.
+     */
+    protected String[] getAvaimet() {
         return avaimet;
     }
 
