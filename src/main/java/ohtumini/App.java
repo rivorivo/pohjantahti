@@ -38,6 +38,10 @@ public class App {
                 int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
                 viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komentoNoCapitalizationChanges.split(" ", 4)[3]);
                 System.out.println("= ");
+            } else if (komento.startsWith("tulosta-bibtex")) {        // tulosta-bibtex <viitteen numero>
+                int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
+                System.out.println("= ");
+                System.out.println(viitteet.get(viitteenNumero).luoBibTeX());
             } else {
                 System.out.println("? ");
             }

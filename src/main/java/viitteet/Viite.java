@@ -52,8 +52,19 @@ public abstract class Viite {
      * @return Tämän olion kentät ja niiden sisällöt BibTeX-yhteensopivassa muodossa. 
      */
     public String luoBibTeX() {
-        return null;
+        String palautus;
+        palautus = "@" + annaViitteenTyypinNimi() + "{" + getTunniste() + "\n";
+        for (int i = 0; i<kentat().length; i++) {
+            if (lueTieto(kentat()[i]) != null) {
+                palautus += kentat()[i] + ": \t" + lueTieto(kentat()[i]) + "\n"; 
+            }
+        }
+        palautus += "}";
+        return palautus;
     }
+    public abstract String annaViitteenTyypinNimi();
+    public abstract String getTunniste();
+    public abstract void setTunniste(String tunniste);
     @Override
     public abstract String toString();    
 }

@@ -9,7 +9,7 @@ package viitteet;
  *
  * @author jphanski
  */
-public class Article extends Viite{
+public class Article extends Viite {
     /**
      * Kentät jotka tämä viitetyyppi muistaa, nimettyinä.
      */
@@ -82,6 +82,21 @@ public class Article extends Viite{
             }
         }
         return null;
+    }
+
+    @Override
+    public String annaViitteenTyypinNimi() {
+        return "Article";
+    }
+
+    @Override
+    public String getTunniste() {
+        return "tuhetu";
+    }
+
+    @Override
+    public void setTunniste(String tunniste) {
+        return;
     }
     
 }
