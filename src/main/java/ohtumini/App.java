@@ -7,22 +7,27 @@ package ohtumini;
 
 import java.util.Locale;
 import java.util.Scanner;
+import viitteet.Article;
+import viitteet.Viite;
 
 public class App {
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         String komento;
+        Viite viite = new Article();
         while (true) {
             komento = reader.nextLine();
-            komento = komento.toUpperCase(Locale.ROOT);
-            if (komento.startsWith("FIRST COMMAND")) {
+            komento = komento.toLowerCase(Locale.ROOT);
+            if (komento.startsWith("luo-viite")) {
                 System.out.println("= ");
-                //Juttuja
+                viite = new Article();                
 
-            } else if (komento.startsWith("SECOND_COMMAND")) {
+            } else if (komento.startsWith("tulosta-viite")) {
                 System.out.println("= ");
-                //Muita juttuja
+                System.out.println(viite);
+            } else if (komento.startsWith("tyhja-komento")) {
+                System.out.println("= ");
             } else {
                 System.out.println("? ");
             }
