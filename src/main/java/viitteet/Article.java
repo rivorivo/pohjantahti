@@ -10,7 +10,7 @@ package viitteet;
  * @author jphanski
  */
 public class Article extends Viite{
-    private static final String[] kentat = {"author", "title", "journal", "year", "volume", "number", "pages", "month", "note", "key"};
+    private static final String[] kentat = {"Author", "Title", "Journal", "Year", "Volume", "Number", "Pages", "Month", "Note", "Key"};
     private static final boolean[] pakollisuus = {true, true, true, true, true, false, false, false, false, false};
     private String[] avaimet;
     
@@ -30,7 +30,7 @@ public class Article extends Viite{
     @Override
     public void lisaaTieto(String kentanNimi, String avain) {
         for (int i = 0; i < kentat.length; i++) {
-            if (kentat[i].compareTo(kentanNimi) == 0) {
+            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
                 avaimet[i] = avain;
                 return;
             }
@@ -49,7 +49,7 @@ public class Article extends Viite{
     @Override
     public boolean onkoPakollinen(String kentanNimi) {
         for (int i = 0; i<kentat.length; i++) {
-            if (kentat[i].compareTo(kentanNimi) == 0) {
+            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
                 if (pakollisuus[i]) return true;
             }
         }
