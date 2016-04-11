@@ -33,10 +33,18 @@ public abstract class Viite {
      * @return 
      */
     public abstract boolean onkoPakollinen(String kentanNimi);
-    
-    @Override
+        
     /**
-     * Printtaa BibTeX-formaatissa viitteen tiedot.
+     * Palauttaa BibTeX-formaatissa viitteen tiedot. Esimerkiksi:
+     * 
+     * author    = "Joku",
+     * title     = "Joku muu",
+     * publisher = "Ihan joku kolmas",
+     * year      = 1975
+     * 
+     * @return Tämän olion kentät ja niiden sisällöt BibTeX-yhteensopivassa muodossa. 
      */
+    public abstract String luoBibTeX();
+    @Override
     public abstract String toString();    
 }
