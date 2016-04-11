@@ -38,16 +38,22 @@ public class ArticleTest {
     }
     
     @Test
-    public void llisaaTietoToimiiOikein() {
+    public void lisaaTietoToimiiOikein() {
         String[] kentat = article.kentat();
         String[] avain = article.getAvaimet();
         article.lisaaTieto("Author", "0");
         assertTrue(avain[0] == "0");
     }
     
-    /*@Test
+    @Test
     public void lueTietoToimiiOikein() {
-        
+        String[] kentat = article.kentat();
+        String[] avain = article.getAvaimet();
+        article.lisaaTieto("Author", "0");
+        article.lueTieto("Author");
+        assertEquals("0", avain[0]);
     }
-    */
+    
+    
+    
 }
