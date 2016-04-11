@@ -27,6 +27,13 @@ public abstract class Viite {
     public abstract void lisaaTieto(String kentanNimi, String avain);
     
     /**
+     * Lukee avaimen kentästä kentanNimi
+     * @param kentanNimi Kentta josta avain luetaan
+     * @return kentanNimi-nimisen kentan avaimen arvo.
+     */
+    public abstract String lueTieto(String kentanNimi);
+    
+    /**
      * Palauttaa true mikäli kentanNimi-niminen kenttä on pakollinen.
      * Mikäli kenttää ei määritelty, se ei ole pakollinen.
      * @param kentanNimi

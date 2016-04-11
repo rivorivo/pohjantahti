@@ -51,5 +51,15 @@ public class Article extends Viite{
         }
         return false;
     }
+
+    @Override
+    public String lueTieto(String kentanNimi) {
+        for (int i = 0; i<kentat.length; i++) {
+            if (kentat[i].compareTo(kentanNimi) == 0) {
+                return avaimet[i];
+            }
+        }
+        return null;
+    }
     
 }
