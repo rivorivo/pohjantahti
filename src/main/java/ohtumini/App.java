@@ -20,30 +20,31 @@ public class App {
 
     //Siivottava? Malli alla tai ehdotuksia?
     public void run() {
-        Scanner reader = new Scanner(System.in);
         String komento;
         String komentoNoCapitalizationChanges;
         while (true) {
-            komentoNoCapitalizationChanges = reader.nextLine();
+            komentoNoCapitalizationChanges = io.readLine(">");
             komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
-            if (komento.startsWith("luo-viite")) {                  //luo-viite <viitteen tyyppi>
+            if (komento.startsWith("luo-viite")) {                  //luo-viite 
                 luoUusiViite();
             } else if (komento.startsWith("tulosta-viite")) {       //tulosta-viite <viitteen numero>
                 int viitteenNumero = Integer.parseInt(komento.substring(14)) - 1;
-                System.out.println("= ");
-                System.out.println(viitteet.get(viitteenNumero));
+                io.print("= ");
+                io.print("" + viitteet.get(viitteenNumero));
             } else if (komento.startsWith("aseta-kentta")) {        // aseta-kentta <viitteen numero> <kentan nimi> <arvo>
                 int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
                 viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komentoNoCapitalizationChanges.split(" ", 4)[3]);
-                System.out.println("= ");
+                io.print("= ");
             } else if (komento.startsWith("tulosta-bibtex")) {        // tulosta-bibtex <viitteen numero>
                 int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
-                System.out.println("= ");
-                System.out.println(viitteet.get(viitteenNumero).luoBibTeX());
+                io.print("= ");
+                io.print(viitteet.get(viitteenNumero).luoBibTeX());
             } else if (komento.startsWith("luo-bibtex-tiedosto")) {        // luo bibtext tiedoston viitteistä
                 tulostaViitteetTiedostoon();
+            } else if (komento.startsWith("lopeta")) {        // luo bibtext tiedoston viitteistä
+                break;
             } else {
-                System.out.println("? ");
+                io.print("? ");
             }
         }
     }
@@ -55,13 +56,17 @@ public class App {
 
     private void luoUusiViite() {
         io.print("Anna viitteen tyyppi");
-        String komento = io.readLine("= ");
+        String komento = io.readLine("> ");
         if (komento.startsWith("article")) {
+            io.print("= ");
             viitteet.add(new Article());
             io.print("" + viitteet.size());
-        } else if(komento.startsWith("book")){
+        } else if (komento.startsWith("book")) {
+            io.print("= ");
             viitteet.add(new Book());
             io.print("" + viitteet.size());
+        }else if (komento.startsWith("palaa")) {
+            return;
         } else {
             io.readLine("? ");
         }
@@ -70,7 +75,7 @@ public class App {
     private void tulostaViitteetTiedostoon() {
         io.print("Anna tiedostonimi mihin BibTex tulostetaan:");
         try {
-            String nimi = io.readLine("= ");
+            String nimi = io.readLine("> ");
             BibTexTiedosto t = new BibTexTiedosto(nimi);
             for (Viite v : viitteet) {
                 t.lisaaViiteTiedostoon(v.luoBibTeX());
