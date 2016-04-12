@@ -7,7 +7,7 @@ description 'Käyttäjä voi lisätä viitten'
 scenario "käyttäjä voi lisätä artikkeli-viitteen", {
     given 'käsky lisää uusi viite valittu', {
 		
-                io = new stubIO("luo-viite","article")
+                io = new StubIO("luo-viite","article")
                 app = new App(io)			
     	}
     when 'uusi viite- ja oikea artikkelityyppi -käskyt annettu', {
