@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 
-package io;
+package ohtumini.io;
 
 /**
  *
  * @author rivorivo
  */
 public interface IO {
-    void Print(String toPrint);
+    void print(String toPrint);
     int readInt(String prompt);
     String readLine(String prompt);
 }
