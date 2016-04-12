@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package io;
+package ohtumini.io;
 
 import java.util.ArrayList;
 
@@ -43,8 +43,4 @@ public class StubIO implements IO {
         return "";
     } 
 
-    @Override
-    public void Print(String toPrint) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
