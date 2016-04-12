@@ -1,6 +1,6 @@
-import ohtumini.*
+import ohtumini.io.*
 import viitteet.*
-import io.*
+import ohtumini.*
 
 
 description 'Käyttäjä voi lisätä viitten'
