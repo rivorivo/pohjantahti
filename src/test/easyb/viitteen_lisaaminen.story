@@ -10,11 +10,12 @@ scenario "käyttäjä voi lisätä artikkeli-viitteen", {
 			
     	}
     when 'pakolliset kentät täytetty validisti ja lisätty mahdolliset valinnaiset kentät'{
-                artikkeli.lisaaTieto{"Author","Janne Kallio"}
-                artikkeli.lisaaTieto{"Title","Kirjani"}
-                artikkeli.lisaaTieto{"Journal","Journal"}
-                artikkeli.lisaaTieto{"Year","2016"}
-                artikkeli.lisaaTieto{"Volume","12"}
+               
+              artikkeli.lisaaTieto("Author","Janne Kallio")
+              artikkeli.lisaaTieto("Title","Kirjani")
+                artikkeli.lisaaTieto("Journal","Journal")
+                artikkeli.lisaaTieto("Year","2016")
+                artikkeli.lisaaTieto("Volume","12")
 	}
     then 'avaimet löytyvät viitteestä'{
 		artikkeli.getAvaimet()	
