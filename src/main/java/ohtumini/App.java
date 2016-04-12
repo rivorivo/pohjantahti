@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 import viitteet.Article;
+import viitteet.Book;
 import viitteet.Viite;
 
 public class App {
@@ -26,8 +27,11 @@ public class App {
                     System.out.println("= ");
                     viitteet.add(new Article());
                     System.out.println(viitteet.size());
-                }
-                else {
+                } else if (komento.startsWith("luo-viite book")) {
+                    System.out.println("= ");
+                    viitteet.add(new Book());
+                    System.out.println(viitteet.size());
+                } else {
                     System.out.println("? ");
                 }
             } else if (komento.startsWith("tulosta-viite")) {       //tulosta-viite <viitteen numero>

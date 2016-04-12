@@ -11,12 +11,31 @@ package viitteet;
  */
 public abstract class Viite {
     /**
+     * Tämän viitteen kentät. Jokainen aliluokka asettaa nämä itse.
+     */
+    protected String[] kentat;
+    /**
+     * Merkitsee onko kenttä pakollinen vai ei. Jos pakollisuus[i] = true,
+     * kentat[i] onn pakollinen.
+     */
+    protected boolean[] pakollisuus;
+    /** 
+     * Kenttien arvot     * 
+     */
+    protected String[] avaimet;
+    /**
+     * Tämän Viitteen tunniste, jolla tähän viitteeseen viitataan.
+     */
+    protected String tunniste;
+    /**
      * Palauttaa kenttien nimet. Käytä yhdessä lisaaTieto(String kentanNimi, String avain)
      * funktion kanssa.
      * @return Niiden kenttien nimet joista tämä viite pitää kirjaa.
      * 
      */
-    public abstract String[] kentat();
+    public String[] kentat() {
+        return kentat;
+    }
     
     /**
      * Asettaa Viitteen kentän. Kenttä jota muutetaan on se, jonka nimi vastaa
@@ -24,14 +43,37 @@ public abstract class Viite {
      * @param kentanNimi Kenttä jota muutetaan.
      * @param avain Uusi arvo.
      */
-    public abstract void lisaaTieto(String kentanNimi, String avain);
+    public void lisaaTieto(String kentanNimi, String avain) {
+        for (int i = 0; i < kentat.length; i++) {
+            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
+                avaimet[i] = avain;
+                return;
+            }
+        }
+    }
+    
+    /**
+     * Palauttaa tämän viitteen avaimet listattuna. Järjestys on sama kuin
+     * kentat()-metodin palauttamassa listassa.
+     * @return Viitteen avaimet String-listassa.
+     */
+    protected String[] getAvaimet() {
+        return avaimet;
+    }
     
     /**
      * Lukee avaimen kentästä kentanNimi
      * @param kentanNimi Kentta josta avain luetaan
      * @return kentanNimi-nimisen kentan avaimen arvo.
      */
-    public abstract String lueTieto(String kentanNimi);
+    public String lueTieto(String kentanNimi) {
+        for (int i = 0; i<kentat.length; i++) {
+            if (kentat[i].compareTo(kentanNimi) == 0) {
+                return avaimet[i];
+            }
+        }
+        return null;
+    }
     
     /**
      * Palauttaa true mikäli kentanNimi-niminen kenttä on pakollinen.
@@ -39,7 +81,14 @@ public abstract class Viite {
      * @param kentanNimi
      * @return 
      */
-    public abstract boolean onkoPakollinen(String kentanNimi);
+    public boolean onkoPakollinen(String kentanNimi) {
+        for (int i = 0; i<kentat.length; i++) {
+            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
+                if (pakollisuus[i]) return true;
+            }
+        }
+        return false;
+    }
         
     /**
      * Palauttaa BibTeX-formaatissa viitteen tiedot. Esimerkiksi:
@@ -62,9 +111,33 @@ public abstract class Viite {
         palautus += "}";
         return palautus;
     }
+    
+    /**
+     * Palauttaa tämän viitteen tyypin String-tietona. Esimerkiksi "Article".
+     * @return 
+     */
     public abstract String annaViitteenTyypinNimi();
-    public abstract String getTunniste();
-    public abstract void setTunniste(String tunniste);
+    
+    /**
+     * Palauttaa tämän Viitteen BibTeX-tunnisteen.
+     * @return 
+     */
+    public String getTunniste() {
+        return tunniste;
+    }
+    /**
+     * Asettaa tämän Viitteen BibTex-tunnisteen.
+     * @param tunniste 
+     */
+    public void setTunniste(String tunniste) {
+        this.tunniste = tunniste;
+    }
     @Override
-    public abstract String toString();    
+    public String toString() {
+        String palautus = "";
+        for (int i = 0; i<kentat.length; i++) {
+            palautus += kentat[i] + ": " + ((avaimet[i] == null) ? "Not set" : avaimet[i]) + "\n";           
+        }
+        return palautus;
+    }
 }
