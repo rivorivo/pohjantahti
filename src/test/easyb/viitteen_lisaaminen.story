@@ -15,7 +15,7 @@ scenario "käyttäjä voi lisätä artikkeli-viitteen", {
                 app.run()
 	}
     then 'viite luodaan' ,{
-		io.getPrints().shouldHave("1");	
+		io.getPrints().shouldHave("=,1");	
 	}
 }
 
