@@ -22,7 +22,9 @@ public class App {
     public void run() {
         String komento;
         String komentoNoCapitalizationChanges;
+        
         while (true) {
+            tulostaKomennot();
             komentoNoCapitalizationChanges = io.readLine(">");
             komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
             if (komento.startsWith("luo-viite")) {                  //luo-viite 
@@ -53,8 +55,32 @@ public class App {
         IO io = new ConsoleIO();
         new App(io).run();
     }
+    
+    private void tulostaKomennot() {
+        io.print("\n" + "Käytettävissä olevat komennot:");
+        io.print("- luo-viite:              Luo uuden viitteen");
+        io.print("- tulosta-viite<>:        Tulostaa viitteen annetun <hakuavaimen> perusteella");
+        io.print("- aseta-kentta<><><>:     Asettaa viitteelle <viitteen numeron> <kentän nimen> <arvon>");
+        io.print("- tulosta-bibtex<>:       Tulostaa BibTex tiedoston annetun <hakuavaimen> perusteella");
+        io.print("- luo-bibtex-tiedosto:    Luo BibText tiedoston");
+        io.print("- komennot:               Tulostaa käytettävissä olevat komennot");
+        io.print("- lopeta:                 Lopettaa ohjelman suorituksen \n");
+    }
 
+    private void tulostaLuoUusiViiteKomennot() {
+        io.print("\n" + "Käytettävissä olevat komennot:");
+        io.print("- article:                Luo uuden article viitteen");
+        io.print("- book:                   Luo uuden book viitteen");
+        io.print("- palaa:                  Siirtää takaisin päävalikkoon \n");
+    }
+    
+    /*private void tulostaViitteetTiedostoonKomennot() {
+        io.print("käytettävissä olevat komennot: ");
+        io.print("");
+    }*/
+    
     private void luoUusiViite() {
+        tulostaLuoUusiViiteKomennot();
         io.print("Anna viitteen tyyppi");
         String komento = io.readLine("> ");
         if (komento.startsWith("article")) {
