@@ -1,6 +1,7 @@
 package viitteet;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import viitteet.Viite;
 
 public class Viitelista implements java.io.Serializable {
@@ -13,16 +14,51 @@ public class Viitelista implements java.io.Serializable {
         viitteet = new ArrayList<>();
     }
     
+    /**
+     * Lisää viitteen viitelistaan. Viitteen voi tämän jälkeen noutaa tunnisteen perusteella.
+     * @param v Lisättävä viite.
+     */
     public void lisaaViiteListaan(Viite v) {
+        //Laittomia tilanteita.
+        if (v.getTunniste() == null) {
+            throw new IllegalStateException("Viitteellä ei tunnistetta");
+        }
+        for (Viite viite : viitteet) {
+            if (viite.getTunniste().equalsIgnoreCase(v.getTunniste())) {
+                throw new IllegalStateException("Yritetty lisätä viite, vaikka sellainen oli jo");
+            }
+        }
         viitteet.add(v);
     }
     
-    public boolean poistaViiteListasta() {
-        return true;
+    /**
+     * Poistaa viitteen viitelistasta. Anna poistettavan viitteen tunniste.
+     * @param tunniste Poistettavan viitteen tunniste.
+     */
+    public void poistaViiteListasta(String tunniste) {
+        for (Iterator<Viite> it = viitteet.iterator(); it.hasNext(); ) {
+            Viite viite = it.next();
+            if (viite.getTunniste().equalsIgnoreCase(tunniste)) {
+                it.remove();
+            }
+        }
     }
-
+    
+    /**
+     * Palauttaa viitteen listasta jonka tunniste vastaa parametria tunniste.
+     * @param tunniste Haettavan viitteen tunniste.
+     * @return Viite, jonka tunniste on tunniste, tai jos sellaista ei löydy listasta, null.
+     */
+    public Viite haeViite(String tunniste) {
+        for (Viite viite : viitteet) {
+            if (viite.getTunniste().equalsIgnoreCase(tunniste)) {
+                return viite;
+            }
+        }
+        return null;
+    }
    
-
+    
     public String getNimi() {
         return nimi;
     }
