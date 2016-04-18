@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class BibTexTiedosto {
 
-    private String tiedostoNimi;
+    private final String tiedostoNimi;
     private File tiedosto;
 
     /**
@@ -25,7 +25,7 @@ public class BibTexTiedosto {
      * @throws IOException antaa keskeytyksen jos tiedoston luominen ei onnistu
      */
     public BibTexTiedosto(String tiedostoNimi) throws IOException {
-        this.tiedostoNimi = tiedostoNimi;
+        this.tiedostoNimi = tarkastaTiedostoNimi(tiedostoNimi);
         luoTiedostoJosEiOlemassa();
     }
 
@@ -57,9 +57,17 @@ public class BibTexTiedosto {
     }
 
     private void luoTiedostoJosEiOlemassa() throws IOException {
-        tiedosto = new File(tiedostoNimi + ".bib");
+        tiedosto = new File(tiedostoNimi);
         if (!tiedosto.exists()) {
             tiedosto.createNewFile();
+        }
+    }
+    
+    private String tarkastaTiedostoNimi(String nimi) {
+        if (nimi.contains(".bib")) {
+            return nimi;
+        } else {
+            return nimi + ".bib";
         }
     }
 

@@ -9,7 +9,7 @@ package viitteet;
  *
  * @author jphanski
  */
-public abstract class Viite {
+public abstract class Viite implements java.io.Serializable {
     /**
      * Tämän viitteen kentät. Jokainen aliluokka asettaa nämä itse.
      */
@@ -102,10 +102,10 @@ public abstract class Viite {
      */
     public String luoBibTeX() {
         String palautus;
-        palautus = "@" + annaViitteenTyypinNimi() + "{" + getTunniste() + "\n";
-        for (int i = 0; i<kentat().length; i++) {
-            if (lueTieto(kentat()[i]) != null) {
-                palautus += kentat()[i] + ": \t" + lueTieto(kentat()[i]) + "\n"; 
+        palautus = "@" + annaViitteenTyypinNimi() + "{" + getTunniste() + ", \n";
+        for (String kentat1 : kentat()) {
+            if (lueTieto(kentat1) != null) {
+                palautus += kentat1 + " = {" + lueTieto(kentat1) + "}, \n"; 
             }
         }
         palautus += "}";
