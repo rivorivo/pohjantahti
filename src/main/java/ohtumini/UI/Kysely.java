@@ -1,7 +1,6 @@
 package ohtumini.UI;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Locale;
 import ohtumini.bibtex.BibTexTiedosto;
 import ohtumini.io.IO;
@@ -31,7 +30,7 @@ public class Kysely {
     }
 
     public void run() {
-        String komentoNoCapitalizationChanges;        
+        String komentoNoCapitalizationChanges;
         tuloste.tulostaKomennot();
         while (running) {
             komentoNoCapitalizationChanges = io.readLine(">");
@@ -47,7 +46,10 @@ public class Kysely {
         tulostaBibTeX();
         luoBibTex();
         komennot();
+        tallennaTiedostoon();
+        lataaTiedosto();
         lopeta();
+
     }
 
     //luo-viite 
@@ -75,7 +77,7 @@ public class Kysely {
         }
         String syote;
         for (String kentta : uusiViite.kentat()) {
-            io.print("Anna kenttä " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") +":");
+            io.print("Anna kenttä " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");
             do {
                 syote = io.readLine("> ");
             } while (uusiViite.onkoPakollinen(kentta) && syote.length() == 0);
@@ -196,11 +198,47 @@ public class Kysely {
         }
     }
 
+    public void lataaTiedosto() {
+        if (komento.startsWith("lataa") || komento.startsWith("7")) {
+            if (viitteet.size() > 0) {
+                if (!varmistus("Sinulla on viitteitä, muutokset katoavat jos lataat päälle uudet! Oletko varma?")) {
+                    return;
+                }
+            }
+            TallennuksenLatausKysely k = new TallennuksenLatausKysely(io);
+            k.suorita();
+            if (k.getLadattuViitelista() != null) {
+                viitteet = k.getLadattuViitelista();
+            } else {
+                io.print("Viitteitten lataaminen ei onnistunut");
+            }
+        }
+    }
+    
+    public void tallennaTiedostoon() {
+        if (komento.startsWith("tallenna") || komento.startsWith("8")) {
+            new TallennusKysely(io, viitteet).suorita();
+        }
+    }
+
     // luo bibtext tiedoston viitteistä 
-    //"7"
+    //"9"
     public void lopeta() {
-        if (komento.startsWith("lopeta") || komento.startsWith("7")) {
+        if (komento.startsWith("lopeta") || komento.startsWith("9")) {
+            if (varmistus("Tallennetaanko muutokset?")) {
+                new TallennusKysely(io, viitteet).suorita();
+            }
             running = false;
         }
+    }
+    
+    //hyrr hirviö, koska aika
+    private boolean varmistus(String kysymys) {
+        String yn = "";
+        while (!(yn.startsWith("n") || yn.startsWith("e") || yn.startsWith("y") || yn.startsWith("k"))) {
+            io.print(kysymys);
+            yn = io.readLine("y/n > ").toLowerCase();
+        }
+        return (yn.startsWith("y") || yn.startsWith("k"));
     }
 }

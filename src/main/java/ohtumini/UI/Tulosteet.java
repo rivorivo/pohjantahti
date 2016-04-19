@@ -22,7 +22,9 @@ public class Tulosteet {
         io.print("- 4 / tulosta-bibtex<>:       Tulostaa BibTex tiedoston annetun <hakuavaimen> perusteella");
         io.print("- 5 / luo-bibtex-tiedosto:    Luo BibText tiedoston");
         io.print("- 6 / komennot:               Tulostaa käytettävissä olevat komennot");
-        io.print("- 7 / lopeta:                 Lopettaa ohjelman suorituksen \n");
+        io.print("- 7 / lataa:                  Lataa viitteet tiedostosta");
+        io.print("- 8 / tallenna:               Tallentaa viitteet tiedostoon");
+        io.print("- 9 / lopeta:                 Lopettaa ohjelman suorituksen \n");
     }
 
     public void tulostaLuoUusiViiteKomennot() {

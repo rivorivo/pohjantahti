@@ -97,4 +97,12 @@ public class BibTexTiedostoTest {
             + " edition   = \"1st\",\n"
             + "}";
 
+    /**
+     * Test of getTiedostoNimi method, of class BibTexTiedosto.
+     */
+    @Test
+    public void testGetTiedostoNimi() {
+        assertEquals("testi.bib", t.getTiedostoNimi());
+    }
+
 }

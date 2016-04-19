@@ -3,3 +3,4 @@
 /target/
 *.bib
 /nbproject/
+*.rflist

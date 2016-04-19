@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtumini.bibtex;
 
 import java.io.BufferedWriter;
@@ -21,6 +16,7 @@ public class BibTexTiedosto {
 
     /**
      * Luo uuden tiedoston, johon viitteet tulostetaan BibTex muodossa
+     *
      * @param tiedostoNimi tiedostolle annettu nimi
      * @throws IOException antaa keskeytyksen jos tiedoston luominen ei onnistu
      */
@@ -31,6 +27,7 @@ public class BibTexTiedosto {
 
     /**
      * Lisää viitteen tiedoston loppuun
+     *
      * @param viite viite BibTex muodossa
      */
     public void lisaaViiteTiedostoon(String viite) {
@@ -43,11 +40,9 @@ public class BibTexTiedosto {
             fw.flush();
             fw.close();
         } catch (IOException ex) {
-            
         }
-
     }
-    
+
     /**
      * Poistaa BibTextiä varten luodun tiedoston
      * @return Palauttaa true jos onnistui
@@ -56,13 +51,19 @@ public class BibTexTiedosto {
         return tiedosto.delete();
     }
 
+    /**
+     * Palauttaa BibText tiedoston nimen
+     * @return 
+     */
+    public String getTiedostoNimi() {
+        return tiedostoNimi;
+    }
+
     private void luoTiedostoJosEiOlemassa() throws IOException {
         tiedosto = new File(tiedostoNimi);
-        if (!tiedosto.exists()) {
-            tiedosto.createNewFile();
-        }
+        tiedosto.createNewFile();
     }
-    
+
     private String tarkastaTiedostoNimi(String nimi) {
         if (nimi.contains(".bib")) {
             return nimi;
