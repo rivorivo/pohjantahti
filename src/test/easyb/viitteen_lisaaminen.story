@@ -34,14 +34,14 @@ scenario "käyttäjä voi lisätä Book-viitteen", {
 
 scenario "käyttäjä voi lisätä Inproceedings-viitteen", {
     given 'käsky lisää uusi viite valittu', {		
-    //          io = new StubIO("luo-viite","inproceedings","Testi1","Testi2","Testi3","Testi4", "Testi5","Testi6","Testi6","Testi7","Tunniste")
-    //          kysely = new Kysely(io)			
+              io = new StubIO("luo-viite","inproceedings","Testi1","Testi2","Testi3","Testi4", "Testi5","Testi6","Testi6","Testi7","Tunniste")
+              kysely = new Kysely(io)			
     	}
  when 'uusi viite- ja oikea artikkelityyppi sekä parametrit annettu', {
-    //          kysely.run()
+              kysely.run()
 	}
     then 'viite luodaan' ,{
-    //      	io.getPrints().shouldHave("Viite luotu","Viitteitä yhteensä: 1")
+              io.getPrints().shouldHave("Viite luotu","Viitteitä yhteensä: 1")
 	}
 }
 

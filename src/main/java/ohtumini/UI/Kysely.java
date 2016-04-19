@@ -8,6 +8,7 @@ import ohtumini.io.IO;
 import viitteet.Article;
 import viitteet.Book;
 import viitteet.Viite;
+import viitteet.Inproceedings;
 import viitteet.Viitelista;
 
 /**
@@ -69,6 +70,9 @@ public class Kysely {
         } else if (kasky.startsWith("book") || kasky.startsWith("2")) {
             io.print("Uusi book viite luotu");
             uusiViite = new Book();
+        } else if (kasky.startsWith("inproceedings") || kasky.startsWith("3")) {
+            io.print("Uusi inproceedings viite luotu");
+            uusiViite = new Inproceedings();
         } else {
             io.print("\n Viitettä ei luotu. ");
             return;
