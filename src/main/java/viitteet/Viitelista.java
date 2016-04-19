@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import viitteet.Viite;
 
-public class Viitelista implements java.io.Serializable {
+public class Viitelista implements java.io.Serializable, Iterable<Viite> {
     
     private String nimi;
     private ArrayList<Viite> viitteet;
@@ -71,6 +71,36 @@ public class Viitelista implements java.io.Serializable {
 
     public void setNimi(String nimi) {
         this.nimi = nimi;
+    }
+
+    public int size() {
+        return viitteet.size();
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new ViiteIteraattori(this);
+    }
+    private class ViiteIteraattori implements Iterator<Viite> {
+        private Viitelista lista;
+        private int index;
+        
+        public ViiteIteraattori(Viitelista lista) {
+            this.lista = lista;
+            index = 0;
+        }
+        @Override
+        public boolean hasNext() {
+            if (lista.getViitteet() == null) return false;
+            return lista.getViitteet().size() > index;
+        }
+
+        @Override
+        public Viite next() {
+            index++;
+            return lista.getViitteet().get(index-1);
+        }
+        
     }
     
     

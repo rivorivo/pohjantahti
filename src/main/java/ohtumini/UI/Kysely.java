@@ -8,6 +8,7 @@ import ohtumini.io.IO;
 import viitteet.Article;
 import viitteet.Book;
 import viitteet.Viite;
+import viitteet.Viitelista;
 
 /**
  *
@@ -16,24 +17,23 @@ import viitteet.Viite;
 public class Kysely {
 
     private IO io;
-    private LinkedList<Viite> viitteet;
+    private Viitelista viitteet;
     private Tulosteet tuloste;
     private boolean running;
     private String komento;
 
     public Kysely(IO io) {
         this.io = io;
-        this.viitteet = new LinkedList<>();
+        this.viitteet = new Viitelista("default");
         this.tuloste = new Tulosteet(io);
         this.running = true;
 
     }
 
     public void run() {
-        String komentoNoCapitalizationChanges;
-
+        String komentoNoCapitalizationChanges;        
+        tuloste.tulostaKomennot();
         while (running) {
-            tuloste.tulostaKomennot();
             komentoNoCapitalizationChanges = io.readLine(">");
             this.komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
             aloitaKysely(komentoNoCapitalizationChanges);
@@ -62,39 +62,37 @@ public class Kysely {
     }
 
     public void aloitaAlikysely(String kasky) {
-        luoArticle(kasky);
-        luoBook(kasky);
-        palaa(kasky);
-    }
-    
-    //luo Article viitteen 
-    //"1" + "1"
-    public void luoArticle(String kasky) {
+        Viite uusiViite;
         if (kasky.startsWith("article") || kasky.startsWith("1")) {
             io.print("Uusi article viite luotu");
-            viitteet.add(new Article());
-            viiteListanKoko();
-        }
-    }
-    
-    //luo Book viitteen 
-    //"1" + "2"
-    public void luoBook(String kasky) {
-        if (kasky.startsWith("book") || kasky.startsWith("2")) {
+            uusiViite = new Article();
+        } else if (kasky.startsWith("book") || kasky.startsWith("2")) {
             io.print("Uusi book viite luotu");
-            viitteet.add(new Book());
-            viiteListanKoko();
-        }
-    }
-    
-    //palauttaa takaisin kyselyyn luoViite kyselystä 
-    //"1" + "3"
-    public void palaa(String kasky) {
-        if (kasky.startsWith("palaa") || kasky.startsWith("3")) {
+            uusiViite = new Book();
+        } else {
             io.print("\n Viitettä ei luotu. ");
+            return;
         }
+        String syote;
+        for (String kentta : uusiViite.kentat()) {
+            io.print("Anna kenttä " + kentta + ":");
+            do {
+                syote = io.readLine("> ");
+            } while (uusiViite.onkoPakollinen(kentta) && syote.length() == 0);
+            if (syote.length() > 0) {
+                uusiViite.lisaaTieto(kentta, syote);
+            }
+        }
+        io.print("Anna viitteelle tunniste:");
+        do {
+            syote = io.readLine("> ");
+        } while (viitteet.get(syote) != null || syote.length() == 0); //Ei anneta luoda
+        uusiViite.setTunniste(syote);                                 //useaa viitettä joilla
+        viitteet.add(uusiViite);                                      //sama tunniste
+        io.print("Viite luotu");
+        viiteListanKoko();
     }
-    
+
     public void viiteListanKoko() {
         io.print("Viitteitä yhteensä: " + viitteet.size());
     }
@@ -102,10 +100,19 @@ public class Kysely {
     //tulosta-viite <viitteen numero> 
     //"2"
     public void tulostaViite() {
+        String tunniste;
         if (komento.startsWith("tulosta-viite") || komento.startsWith("2")) {
-            int viitteenNumero = Integer.parseInt(komento.substring(14)) - 1;
-            io.print("= ");
-            io.print("" + viitteet.get(viitteenNumero));
+            if (komento.split(" ").length < 2) {
+                tunniste = io.readLine("Anna tunniste\n> ");
+            } else {
+                tunniste = komento.split(" ")[1];
+            }
+
+            if (viitteet.get(tunniste) == null) {
+                io.print("Tunnistetta ei löytynyt");
+            } else {
+                io.print(viitteet.get(tunniste).toString());
+            }
         }
     }
 
@@ -115,9 +122,32 @@ public class Kysely {
         if (komento.startsWith("aseta-kentta") || komento.startsWith("3")) {
             //io.print("Anna viitteen numero, jolle haluat asettaa uuden kentän: ");
             //io.readLine(komento);
-            int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
-            viitteet.get(viitteenNumero).lisaaTieto(komento.split(" ")[2], komentoNoCapitalizationChanges.split(" ", 4)[3]);
-            io.print("= ");
+            String tunniste;
+            String kentta;
+            String avain;
+            if (komento.split(" ").length > 1) {
+                tunniste = komento.split(" ")[1];
+            } else {
+                tunniste = io.readLine("Anna tunniste\n> ");
+            }
+            if (viitteet.get(tunniste) == null) {
+                io.print("Tunnistetta ei löytynyt");
+                return;
+            }
+            if (komento.split(" ").length > 2) {
+                kentta = komento.split(" ")[2];
+            } else {
+                io.print("Anna kentta: ");
+                kentta = io.readLine("> ");
+            }
+            if (komento.split(" ").length > 3) {
+                avain = komentoNoCapitalizationChanges.split(" ", 4)[3];
+            } else {
+                io.print("Anna avain: ");
+                avain = io.readLine("> ");
+            }
+            viitteet.get(tunniste).lisaaTieto(kentta, avain);
+            io.print("Asettaminen onnistui");
         }
     }
 
@@ -125,9 +155,17 @@ public class Kysely {
     //"4"
     public void tulostaBibTeX() {
         if (komento.startsWith("tulosta-bibtex") || komento.startsWith("4")) {
-            int viitteenNumero = Integer.parseInt(komento.split(" ")[1]) - 1;
-            io.print("= ");
-            io.print(viitteet.get(viitteenNumero).luoBibTeX());
+            String tunniste;
+            if (komento.split(" ").length > 1) {
+                tunniste = komento.split(" ")[1];
+            } else {
+                tunniste = io.readLine("Anna tunniste\n> ");
+            }
+            if (viitteet.get(tunniste) == null) {
+                io.print("Tunnistetta ei löytynyt");
+                return;
+            }
+            io.print(viitteet.get(tunniste).luoBibTeX());
         }
     }
 
@@ -145,7 +183,7 @@ public class Kysely {
                 io.print("Viitteet löytyvät tiedostosta " + nimi + ".bib");
             } catch (IOException ex) {
                 io.print("Tiedoston luominen ei onnistu.");
-                io.print("Tarkista kansion kirjoitus oikeudet.");
+                io.print("Tarkista kansion kirjoitusoikeudet.");
             }
         }
     }
@@ -153,7 +191,7 @@ public class Kysely {
     //tulostaa komennot 
     //"6"
     public void komennot() {
-        if (komento.startsWith("komennot") || komento.startsWith("6")) {
+        if (komento.startsWith("komennot") || komento.startsWith("6") || komento.length() == 0) {
             tuloste.tulostaKomennot();
         }
     }
