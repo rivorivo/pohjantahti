@@ -75,7 +75,7 @@ public class Kysely {
         }
         String syote;
         for (String kentta : uusiViite.kentat()) {
-            io.print("Anna kenttä " + kentta + ":");
+            io.print("Anna kenttä " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") +":");
             do {
                 syote = io.readLine("> ");
             } while (uusiViite.onkoPakollinen(kentta) && syote.length() == 0);
