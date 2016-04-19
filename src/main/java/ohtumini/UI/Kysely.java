@@ -50,6 +50,7 @@ public class Kysely {
         tallennaTiedostoon();
         lataaTiedosto();
         lopeta();
+        lopetaTallentamatta();
 
     }
 
@@ -76,12 +77,13 @@ public class Kysely {
             io.print("Uusi inproceedings viite luotu");
             uusiViite = new Inproceedings();
         } else {
-            io.print("\n Viitettä ei luotu. ");
+            io.print("\n");
+            io.print("Viitettä ei luotu.");
             return;
         }
         String syote;
         for (String kentta : uusiViite.kentat()) {
-            io.print("Anna kenttä " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");
+            io.print("Anna kentta " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");
             do {
                 syote = io.readLine("> ");
             } while (uusiViite.onkoPakollinen(kentta) && syote.length() == 0);
@@ -218,7 +220,7 @@ public class Kysely {
             }
         }
     }
-    
+
     public void tallennaTiedostoon() {
         if (komento.startsWith("tallenna") || komento.startsWith("8")) {
             new TallennusKysely(io, viitteet).suorita();
@@ -235,7 +237,14 @@ public class Kysely {
             running = false;
         }
     }
-    
+
+    //EasyB:tä varten ainakin Joda Koska startsWith
+    public void lopetaTallentamatta() {
+        if (komento.startsWith("tallentamatta-lopeta")) {
+            running = false;
+        }
+    }
+
     //hyrr hirviö, koska aika
     private boolean varmistus(String kysymys) {
         String yn = "";

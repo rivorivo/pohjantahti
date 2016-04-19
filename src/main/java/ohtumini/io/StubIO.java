@@ -40,7 +40,7 @@ public class StubIO implements IO {
         if (i < lines.length) {
             return lines[i++];
         }
-        return "lopeta";
+        return "tallentamatta-lopeta";
     } 
 
 }

@@ -1,8 +1,7 @@
-import ohtumini.io.*
 import viitteet.*
 import ohtumini.*
 import ohtumini.UI.*
-
+import ohtumini.io.*
 
 description 'Käyttöliittymä kyselee viitteen tiedot'
 
@@ -28,7 +27,7 @@ scenario "kysely kysyy ensimmäistä kenttää",{
          kysely.run()
     }
     then 'kysytään viitteen tyyppi', {
-        io.getPrints().shouldHave("Anna kenttä Author/Editor*:")
+        io.getPrints().shouldHave("Anna kentta Author/Editor*:")
     }
 }
 scenario "kysely kysyy toista kenttää",{
@@ -40,6 +39,6 @@ scenario "kysely kysyy toista kenttää",{
          kysely.run()
     }
     then 'kysytään viitteen tyyppi', {
-        io.getPrints().shouldHave("Anna kenttä Title*:")
+        io.getPrints().shouldHave("Title*:")
     }
 }

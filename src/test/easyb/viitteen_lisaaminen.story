@@ -60,7 +60,6 @@ scenario "käyttäjä voi lisätä 2viitettä", {
 }
 
 scenario "käyttäjä ei voi lisätä olematonta viitetyyppiä",{
-scenario "käyttäjä voi lisätä Inproceedings-viitteen", {
     given 'käsky lisää uusi viite valittu', {		
               io = new StubIO("luo-viite","wikipedia")
               kysely = new Kysely(io)			
@@ -69,7 +68,6 @@ scenario "käyttäjä voi lisätä Inproceedings-viitteen", {
               kysely.run()
 	}
     then 'viite luodaan' ,{
-              io.getPrints().shouldHave("Viitettä ei luotu")
+              io.getPrints().shouldHave(" ei luotu")
 	}
-}
 }
