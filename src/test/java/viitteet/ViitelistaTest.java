@@ -33,34 +33,34 @@ public class ViitelistaTest {
      * Test of lisaaViiteListaan method, of class Viitelista.
      */
     @Test
-    public void testLisaaViiteListaan() {
+    public void testAdd() {
         Viite v = new Article();
         v.setTunniste("TestiViite");
         Viite v2 = new Book();
         v2.setTunniste("TestiViite2");
         Viitelista lista = new Viitelista("lista");
         
-        lista.lisaaViiteListaan(v);
-        lista.lisaaViiteListaan(v2);
+        lista.add(v);
+        lista.add(v2);
         
-        assertNotNull("Lisätty viite ei löytynyt", lista.haeViite("TestiViite"));
-        assertNotNull("Toka viite ei löytynyt", lista.haeViite("TestiViite2"));
-        assertNull("Olematon Viite löytynyt", lista.haeViite("TestiViite3"));
+        assertNotNull("Lisätty viite ei löytynyt", lista.get("TestiViite"));
+        assertNotNull("Toka viite ei löytynyt", lista.get("TestiViite2"));
+        assertNull("Olematon Viite löytynyt", lista.get("TestiViite3"));
     }
 
     /**
-     * Test of poistaViiteListasta method, of class Viitelista.
+     * Test of remove method, of class Viitelista.
      */
     @Test
-    public void testPoistaViiteListasta() {
+    public void testRemove() {
         Viite v = new Article();
         v.setTunniste("TestiViite");
         Viitelista lista = new Viitelista("lista");
-        lista.lisaaViiteListaan(v);
-        lista.poistaViiteListasta("TestiViite");
-        assertNull("Lisätty viite ei poistunut", lista.haeViite("TestiViite"));
-        lista.poistaViiteListasta("TestiViite2");
-        lista.poistaViiteListasta("TestiViite");
+        lista.add(v);
+        lista.remove("TestiViite");
+        assertNull("Lisätty viite ei poistunut", lista.get("TestiViite"));
+        lista.remove("TestiViite2");
+        lista.remove("TestiViite");
         
     }
     

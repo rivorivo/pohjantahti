@@ -18,7 +18,7 @@ public class Viitelista implements java.io.Serializable {
      * Lisää viitteen viitelistaan. Viitteen voi tämän jälkeen noutaa tunnisteen perusteella.
      * @param v Lisättävä viite.
      */
-    public void lisaaViiteListaan(Viite v) {
+    public void add(Viite v) {
         //Laittomia tilanteita.
         if (v.getTunniste() == null) {
             throw new IllegalStateException("Viitteellä ei tunnistetta");
@@ -35,7 +35,7 @@ public class Viitelista implements java.io.Serializable {
      * Poistaa viitteen viitelistasta. Anna poistettavan viitteen tunniste.
      * @param tunniste Poistettavan viitteen tunniste.
      */
-    public void poistaViiteListasta(String tunniste) {
+    public void remove(String tunniste) {
         for (Iterator<Viite> it = viitteet.iterator(); it.hasNext(); ) {
             Viite viite = it.next();
             if (viite.getTunniste().equalsIgnoreCase(tunniste)) {
@@ -49,7 +49,7 @@ public class Viitelista implements java.io.Serializable {
      * @param tunniste Haettavan viitteen tunniste.
      * @return Viite, jonka tunniste on tunniste, tai jos sellaista ei löydy listasta, null.
      */
-    public Viite haeViite(String tunniste) {
+    public Viite get(String tunniste) {
         for (Viite viite : viitteet) {
             if (viite.getTunniste().equalsIgnoreCase(tunniste)) {
                 return viite;
