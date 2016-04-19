@@ -1,19 +1,20 @@
 package ohtumini.UI;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
 import ohtumini.bibtex.BibTexTiedosto;
 import ohtumini.io.IO;
 import viitteet.Article;
 import viitteet.Book;
+import viitteet.Inproceedings;
 import viitteet.Viite;
 import viitteet.Viitelista;
 
-/**
- *
- * @author samukaup
- */
+interface LuoViite {
+    Viite luo();
+}
 public class Kysely {
 
     private IO io;
@@ -34,6 +35,7 @@ public class Kysely {
         String komentoNoCapitalizationChanges;        
         tuloste.tulostaKomennot();
         while (running) {
+            io.print("Anna komento");
             komentoNoCapitalizationChanges = io.readLine(">");
             this.komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
             aloitaKysely(komentoNoCapitalizationChanges);
@@ -41,13 +43,23 @@ public class Kysely {
     }
 
     public void aloitaKysely(String komentoNoCapitalizationChanges) {
-        luoViite();
-        tulostaViite();
-        asetaKentta(komentoNoCapitalizationChanges);
-        tulostaBibTeX();
-        luoBibTex();
-        komennot();
-        lopeta();
+        HashMap<String, Runnable> komennot = new HashMap<>();
+        komennot.put("luo-viite", () -> luoViite());
+        komennot.put("1", () -> luoViite());
+        komennot.put("tulosta-viite", () -> tulostaViite());
+        komennot.put("2", () -> tulostaViite());
+        komennot.put("aseta-kentta", () -> asetaKentta(komentoNoCapitalizationChanges));
+        komennot.put("3", () -> asetaKentta(komentoNoCapitalizationChanges));
+        komennot.put("tulosta-bibtex", () -> tulostaBibTeX());
+        komennot.put("4", () -> tulostaBibTeX());
+        komennot.put("luo-bibtex-tiedosto", () -> luoBibTex());
+        komennot.put("5", () -> luoBibTex());
+        komennot.put("komennot", () -> komennot());
+        komennot.put("6", () -> komennot());
+        komennot.put("lopeta", () -> lopeta());
+        komennot.put("7", () -> lopeta());
+        
+        komennot.getOrDefault(komento.split(" ")[0], () -> komennot()).run();
     }
 
     //luo-viite 
@@ -63,16 +75,18 @@ public class Kysely {
 
     public void aloitaAlikysely(String kasky) {
         Viite uusiViite;
-        if (kasky.startsWith("article") || kasky.startsWith("1")) {
-            io.print("Uusi article viite luotu");
-            uusiViite = new Article();
-        } else if (kasky.startsWith("book") || kasky.startsWith("2")) {
-            io.print("Uusi book viite luotu");
-            uusiViite = new Book();
-        } else {
-            io.print("\n Viitettä ei luotu. ");
-            return;
-        }
+        
+        HashMap<String, LuoViite> viiteTyypit = new HashMap<>();
+        viiteTyypit.put("article", () -> new Article());
+        viiteTyypit.put("book", () -> new Book());
+        viiteTyypit.put("inproceedings", () -> new Inproceedings());
+        viiteTyypit.put("1", () -> new Article());
+        viiteTyypit.put("2", () -> new Book());
+        viiteTyypit.put("3", () -> new Inproceedings());
+        
+        if (viiteTyypit.get(kasky) == null) return;
+        uusiViite = viiteTyypit.get(kasky).luo();
+                
         String syote;
         for (String kentta : uusiViite.kentat()) {
             io.print("Anna kenttä " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") +":");
