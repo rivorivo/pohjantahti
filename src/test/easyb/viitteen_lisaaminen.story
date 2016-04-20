@@ -68,6 +68,7 @@ scenario "käyttäjä ei voi lisätä olematonta viitetyyppiä",{
               kysely.run()
 	}
     then 'viite luodaan' ,{
-              io.getPrints().shouldHave(" ei luotu")
+              io.getPrints().shouldHave("Viitettä ei luotu.")
 	}
 }
+

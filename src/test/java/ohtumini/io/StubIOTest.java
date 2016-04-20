@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtumini.io;
 
 import java.util.ArrayList;
@@ -18,24 +13,25 @@ import static org.junit.Assert.*;
  * @author Simo
  */
 public class StubIOTest {
-    
+
     StubIO i;
+
     public StubIOTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
-         i = new StubIO("testi", "1");
+        i = new StubIO("testi", "1");
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -76,5 +72,15 @@ public class StubIOTest {
     public void testReadLine() {
         assertEquals("testi", i.readLine(""));
     }
-    
+
+    /**
+     * Test of readLine method, of class StubIO.
+     */
+    @Test
+    public void testReadLineEiPrintteja() {
+        i.readLine("");
+        i.readInt("");
+        assertEquals("tallentamatta-lopeta", i.readLine(""));
+    }
+
 }
