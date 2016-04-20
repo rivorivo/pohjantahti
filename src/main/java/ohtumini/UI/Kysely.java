@@ -128,35 +128,60 @@ public class Kysely {
     //"3"
     public void asetaKentta(String komentoNoCapitalizationChanges) {
         if (komento.startsWith("aseta-kentta") || komento.startsWith("3")) {
-            //io.print("Anna viitteen numero, jolle haluat asettaa uuden kentän: ");
-            //io.readLine(komento);
             String tunniste;
             String kentta;
             String avain;
-            if (komento.split(" ").length > 1) {
-                tunniste = komento.split(" ")[1];
-            } else {
-                tunniste = io.readLine("Anna tunniste\n> ");
-            }
-            if (viitteet.get(tunniste) == null) {
-                io.print("Tunnistetta ei löytynyt");
-                return;
-            }
-            if (komento.split(" ").length > 2) {
-                kentta = komento.split(" ")[2];
-            } else {
-                io.print("Anna kentta: ");
-                kentta = io.readLine("> ");
-            }
-            if (komento.split(" ").length > 3) {
-                avain = komentoNoCapitalizationChanges.split(" ", 4)[3];
-            } else {
-                io.print("Anna avain: ");
-                avain = io.readLine("> ");
-            }
+            tunniste = tunnisteenTarkastusJaKysely();
+            if (tunnistettaEiLoydy(tunniste)) return;
+            kentta = kentanTarkastusJaKysely();
+            avain = avaimenTarkastusJaKysely(komentoNoCapitalizationChanges);
             viitteet.get(tunniste).lisaaTieto(kentta, avain);
             io.print("Asettaminen onnistui");
         }
+    }
+    
+    //tarkastaa onko tunniste asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan tunnisteen.
+    public String tunnisteenTarkastusJaKysely() {
+        String tunniste;
+        if (komento.split(" ").length > 1) {
+            tunniste = komento.split(" ")[1];
+        } else {
+            tunniste = io.readLine("Anna tunniste\n> ");
+        }
+        return tunniste;
+    }
+
+    //Tarkastaa onko annettu tunniste validi.
+    public boolean tunnistettaEiLoydy(String tunniste) {
+        if (viitteet.get(tunniste) == null) {
+            io.print("Tunnistetta ei löytynyt");
+            return true;
+        }
+        return false;
+    }
+    
+    //tarkastaa onko kentta asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan kentän.
+    public String kentanTarkastusJaKysely() {
+        String kentta;
+        if (komento.split(" ").length > 2) {
+            kentta = komento.split(" ")[2];
+        } else {
+            io.print("Anna kentta: ");
+            kentta = io.readLine("> ");
+        }
+        return kentta;
+    }
+
+    //tarkastaa onko avain asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan avaimen.
+    public String avaimenTarkastusJaKysely(String komentoNoCapitalizationChanges) {
+        String avain;
+        if (komento.split(" ").length > 3) {
+            avain = komentoNoCapitalizationChanges.split(" ", 4)[3];
+        } else {
+            io.print("Anna avain: ");
+            avain = io.readLine("> ");
+        }
+        return avain;
     }
 
     // tulosta-bibtex <viitteen numero> 
