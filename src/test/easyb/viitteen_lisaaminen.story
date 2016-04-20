@@ -24,7 +24,7 @@ scenario "käyttäjä voi lisätä Book-viitteen", {
                 io = new StubIO("luo-viite","book","Testi1","Testi2","Testi3","Testi4", "Testi5","Testi6","Testi6","Testi7","Testi8","Testi9","Testi10","Tunniste")
                 kysely = new Kysely(io)			
     	}
- when 'uusi viite- ja oikea artikkelityyppi sekä parametrit annettu', {
+ when 'uusi book-viitetyyppi valittu sekä parametrit annettu', {
                 kysely.run()
 	}
     then 'viite luodaan' ,{
@@ -37,7 +37,7 @@ scenario "käyttäjä voi lisätä Inproceedings-viitteen", {
               io = new StubIO("luo-viite","inproceedings","Testi1","Testi2","Testi3","Testi4", "Testi5","Testi6","Testi6","Testi7","Tunniste")
               kysely = new Kysely(io)			
     	}
- when 'uusi viite- ja oikea artikkelityyppi sekä parametrit annettu', {
+ when 'uusi Inproceedings-viitetyyppi sekä parametrit annettu', {
               kysely.run()
 	}
     then 'viite luodaan' ,{
@@ -51,10 +51,10 @@ scenario "käyttäjä voi lisätä 2viitettä", {
                 kysely = new Kysely(io)	
            		
     	}
- when 'uusi viite- ja oikea artikkelityyppi sekä parametrit annettu', {
+ when 'kaksi viitettä valittu ja niiden parametrit annettu', {
                 kysely.run()
 	}
-    then 'viite luodaan' ,{
+    then '2 viitettä luodaan' ,{
 		io.getPrints().shouldHave("Viite luotu","Viitteitä yhteensä: 2")
 	}
 }
@@ -64,11 +64,24 @@ scenario "käyttäjä ei voi lisätä olematonta viitetyyppiä",{
               io = new StubIO("luo-viite","wikipedia")
               kysely = new Kysely(io)			
     	}
- when 'uusi viite- ja oikea artikkelityyppi sekä parametrit annettu', {
+ when 'olematon viitetyyppi annettu', {
+              kysely.run()
+	}
+    then 'viitettä ei luoda' ,{
+              io.getPrints().shouldHave(" ei luotu")
+	}
+}
+
+scenario "ei-pakolliset kentät voi jättää tyhjäksi",{
+    given 'käsky lisää uusi viite valittu', {		
+              io = new StubIO("luo-viite","article","kentta","kentta","kentta","kentta","kentta","","","","","","tunniste")
+              kysely = new Kysely(io)			
+    	}
+ when 'uusi viite- ja oikea artikkelityyppi sekä vain pakolliset parametrit annettu', {
               kysely.run()
 	}
     then 'viite luodaan' ,{
-              io.getPrints().shouldHave("Viitettä ei luotu.")
+              io.getPrints().shouldHave("Viite luotu","Viitteitä yhteensä: 1")
 	}
 }
 

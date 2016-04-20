@@ -11,7 +11,7 @@ scenario "kysely kysyy viitteen tyypin",{
          io = new StubIO("luo-viite")
          kysely = new Kysely(io)
     }
-    when 'käsky valittu', {
+    when 'viitteen luomis-käsky valittu', {
          kysely.run()
     }
     then 'kysytään viitteen tyyppi', {
@@ -23,10 +23,10 @@ scenario "kysely kysyy ensimmäistä kenttää",{
          io = new StubIO("luo-viite","book")
          kysely = new Kysely(io)
     }
-    when 'käsky valittu', {
+    when 'viitetyyppi valittu', {
          kysely.run()
     }
-    then 'kysytään viitteen tyyppi', {
+    then 'kysytään ensimmäinen parametri', {
         io.getPrints().shouldHave("Anna kentta Author/Editor*:")
     }
 }
@@ -35,10 +35,10 @@ scenario "kysely kysyy toista kenttää",{
          io = new StubIO("luo-viite","article","kirjoittaja")
          kysely = new Kysely(io)
     }
-    when 'käsky valittu', {
+    when 'viitetyyppi valittu ja ensimmäinen parametri annettu', {
          kysely.run()
     }
-    then 'kysytään viitteen tyyppi', {
+    then 'kysytään toinen parametri', {
         io.getPrints().shouldHave("Title*:")
     }
 }
