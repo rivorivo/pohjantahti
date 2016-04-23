@@ -19,21 +19,21 @@ public class Kysely {
     private IO io;
     private Viitelista viitteet;
     private Tulosteet tuloste;
-    private boolean running;
+    private boolean kaynnissa;
     private String komento;
 
     public Kysely(IO io) {
         this.io = io;
         this.viitteet = new Viitelista("default");
         this.tuloste = new Tulosteet(io);
-        this.running = true;
+        this.kaynnissa = true;
 
     }
 
     public void run() {
         String komentoNoCapitalizationChanges;
         tuloste.tulostaKomennot();
-        while (running) {
+        while (kaynnissa) {
             komentoNoCapitalizationChanges = io.readLine(">");
             this.komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
             aloitaKysely(komentoNoCapitalizationChanges);
@@ -236,10 +236,10 @@ public class Kysely {
                     return;
                 }
             }
-            TallennuksenLatausKysely k = new TallennuksenLatausKysely(io);
-            k.suorita();
-            if (k.getLadattuViitelista() != null) {
-                viitteet = k.getLadattuViitelista();
+            TallennuksenLatausKysely tallennuksenLatausKysely = new TallennuksenLatausKysely(io);
+            tallennuksenLatausKysely.suorita();
+            if (tallennuksenLatausKysely.getLadattuViitelista() != null) {
+                viitteet = tallennuksenLatausKysely.getLadattuViitelista();
             } else {
                 io.print("Viitteitten lataaminen ei onnistunut");
             }
@@ -259,24 +259,24 @@ public class Kysely {
             if (varmistus("Tallennetaanko muutokset?")) {
                 new TallennusKysely(io, viitteet).suorita();
             }
-            running = false;
+            kaynnissa = false;
         }
     }
 
     //EasyB:tä varten ainakin Joda Koska startsWith
     public void lopetaTallentamatta() {
         if (komento.startsWith("tallentamatta-lopeta")) {
-            running = false;
+            kaynnissa = false;
         }
     }
 
     //hyrr hirviö, koska aika
     private boolean varmistus(String kysymys) {
-        String yn = "";
-        while (!(yn.startsWith("n") || yn.startsWith("e") || yn.startsWith("y") || yn.startsWith("k"))) {
+        String vastaus = "";
+        while (!(vastaus.startsWith("n") || vastaus.startsWith("e") || vastaus.startsWith("y") || vastaus.startsWith("k"))) {
             io.print(kysymys);
-            yn = io.readLine("y/n > ").toLowerCase();
+            vastaus = io.readLine("y/n > ").toLowerCase();
         }
-        return (yn.startsWith("y") || yn.startsWith("k"));
+        return (vastaus.startsWith("y") || vastaus.startsWith("k"));
     }
 }
