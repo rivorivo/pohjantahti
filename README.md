@@ -9,6 +9,9 @@
 [Burndown chart & työaika link](https://docs.google.com/presentation/d/1aSdrmSkUPxk8TNliQxaCHnfpCsHSiVnFb4_RjzkGvYY/edit?usp=sharing)
 
 
-Kun käyttäjä voi listata tietokannan sisällön siten, että sisältöä voi listauksen perusteella muokata tai poistaa tarpeen mukaan.
-EasyB testit tehtynä kaikille User Storyille siten, että ne toimivat.
-Yksikkötestit tehtynä kaikille projektin luokille siten, että projektin testikattavuus on vähintään 75% ja yksittäisten luokkien kattavuus vähintään 70%.
+
+Definition of Done.
+
+- User storyn vaatima toiminnallisuus on olemassa, käytettävissä käyttöliittymän kautta ja käyttöliittymä tuo tämän toiminnallisuuden esille. Sallitut syötteet on ilmoitettu, ja ohjelma toimii sallituilla syötteillä oikein. Ohjelma kaatuu tai antaa virheilmoituksen virheellisillä syötteillä.
+- EasyB testit tehtynä kaikille relevanteille aspekteille User Storya.
+- Yksikkötestit tehtynä kaikille relevanteille luokille siten, että testikattavuus vähintään 70%.

@@ -42,6 +42,7 @@ public class TallennusKysely {
                 }
             }
             t.tallennaTiedostoon(v);
+            io.print("Tallennus onnistui!");
         } catch (IOException ex) {
             io.print("Ei voida luoda tiedostoa. Tarkasta kirjoitusoikeudet!");
         }

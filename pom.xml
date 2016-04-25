@@ -57,6 +57,16 @@
                         <format>html</format>
                         <format>xml</format>
                     </formats>
+                    <instrumentation>
+                        <ignores>
+                            <ignore>**/UI/*.class</ignore>
+                            <ignore>**/App.class</ignore>
+                        </ignores>
+                        <excludes>
+                            <exclude>**/UI/*.class</exclude>
+                            <exclude>**/App.class</exclude>
+                        </excludes>
+                    </instrumentation>
                 </configuration>
             </plugin>
             <plugin>

@@ -73,8 +73,8 @@ public class ArticleTest {
     
     
     @Test
-    public void toStringOikeassaMuodossa() {
-        
+    public void annaViitteenTyypinNimiPalauttaaViitteenTyypin() {
+        assertEquals(article.annaViitteenTyypinNimi(), "Article");
     }
     
     
