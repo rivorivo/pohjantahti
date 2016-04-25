@@ -10,10 +10,7 @@ import viitteet.Viite;
 import viitteet.Inproceedings;
 import viitteet.Viitelista;
 
-/**
- *
- * @author samukaup
- */
+
 public class Kysely {
 
     private IO io;
@@ -48,6 +45,8 @@ public class Kysely {
         luoBibTex();
         komennot();
         tallennaTiedostoon();
+        listaaViitteet();
+        poistaViite();
         lataaTiedosto();
         lopeta();
         lopetaTallentamatta();
@@ -57,7 +56,7 @@ public class Kysely {
     //luo-viite 
     //"1"
     public void luoViite() {
-        if (komento.startsWith("luo-viite") || komento.startsWith("1")) {
+        if (komento.startsWith("luo-viite") || komento.split(" ")[0].compareTo("1") == 0) {
             tuloste.tulostaLuoUusiViiteKomennot();
             io.print("Anna viitteen tyyppi");
             String kasky = io.readLine("> ");
@@ -134,9 +133,11 @@ public class Kysely {
             tunniste = tunnisteenTarkastusJaKysely();
             if (tunnistettaEiLoydy(tunniste)) return;
             kentta = kentanTarkastusJaKysely();
+            io.print("Tällä hetkellä kentän " + kentta + " arvo on \"" + viitteet.get(tunniste).lueTieto(kentta) + "\"");
             avain = avaimenTarkastusJaKysely(komentoNoCapitalizationChanges);
             viitteet.get(tunniste).lisaaTieto(kentta, avain);
             io.print("Asettaminen onnistui");
+            io.print(tunniste + ":" + kentta + " = \"" + viitteet.get(tunniste).lueTieto(kentta) + "\"");
         }
     }
     
@@ -220,17 +221,59 @@ public class Kysely {
             }
         }
     }
+    
+    //listaa viitteet
+    //"6"
+    public void listaaViitteet() {
+        if (komento.startsWith("listaa-viitteet") || komento.startsWith("6")) {
+            String pitkaVaiLyhyt;
+            io.print("Tulostetaanko vain lyhyt versio kustakin viitteestä? Y/n");
+            pitkaVaiLyhyt = io.readLine("> ");
+            if (pitkaVaiLyhyt.compareToIgnoreCase("n") == 0) {
+                for (Viite v : viitteet) {
+                    io.print(v.getTunniste() + " (" + v.annaViitteenTyypinNimi() + ")");
+                    io.print(v.toString());
+                }
+            }
+            else {
+                for (Viite v : viitteet) {
+                    io.print(v.getTunniste() + " (" + v.annaViitteenTyypinNimi() + ")");
+                }
+            }
+        }
+    }
+    
+    public void poistaViite() {
+        String tunniste;
+        if (komento.startsWith("poista-viite") || komento.startsWith("7")) {
+            if (komento.split(" ").length < 2) {
+                tunniste = io.readLine("Anna tunniste\n> ");
+            } else {
+                tunniste = komento.split(" ")[1];
+            }
+
+            if (viitteet.get(tunniste) == null) {
+                io.print("Tunnistetta ei löytynyt");
+            } else {
+                io.print("Poistetaan viite " + viitteet.get(tunniste).getTunniste());
+                io.print(viitteet.get(tunniste).toString());
+                if (io.readLine("Haluatko varmasti poistaa tämän tunnisteen? y/N\n> ").compareToIgnoreCase("y") == 0) {
+                    viitteet.remove(tunniste);
+                }
+            }
+        }
+    }
 
     //tulostaa komennot 
-    //"6"
+    //"7"
     public void komennot() {
-        if (komento.startsWith("komennot") || komento.startsWith("6") || komento.length() == 0) {
+        if (komento.startsWith("komennot") || komento.startsWith("8") || komento.length() == 0) {
             tuloste.tulostaKomennot();
         }
     }
 
     public void lataaTiedosto() {
-        if (komento.startsWith("lataa") || komento.startsWith("7")) {
+        if (komento.startsWith("lataa") || komento.startsWith("9")) {
             if (viitteet.size() > 0) {
                 if (!varmistus("Sinulla on viitteitä, muutokset katoavat jos lataat päälle uudet! Oletko varma?")) {
                     return;
@@ -247,15 +290,15 @@ public class Kysely {
     }
 
     public void tallennaTiedostoon() {
-        if (komento.startsWith("tallenna") || komento.startsWith("8")) {
+        if (komento.startsWith("tallenna") || komento.startsWith("10")) {
             new TallennusKysely(io, viitteet).suorita();
         }
     }
 
     // luo bibtext tiedoston viitteistä 
-    //"9"
+    //"10"
     public void lopeta() {
-        if (komento.startsWith("lopeta") || komento.startsWith("9")) {
+        if (komento.startsWith("lopeta") || komento.startsWith("11")) {
             if (varmistus("Tallennetaanko muutokset?")) {
                 new TallennusKysely(io, viitteet).suorita();
             }

@@ -68,7 +68,7 @@ public abstract class Viite implements java.io.Serializable {
      */
     public String lueTieto(String kentanNimi) {
         for (int i = 0; i<kentat.length; i++) {
-            if (kentat[i].compareTo(kentanNimi) == 0) {
+            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
                 return avaimet[i];
             }
         }
