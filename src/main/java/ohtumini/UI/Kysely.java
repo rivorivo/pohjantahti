@@ -229,6 +229,7 @@ public class Kysely {
             String pitkaVaiLyhyt;
             io.print("Tulostetaanko vain lyhyt versio kustakin viitteestä? Y/n");
             pitkaVaiLyhyt = io.readLine("> ");
+            io.print(viitteet.size() + " viitettä");
             if (pitkaVaiLyhyt.compareToIgnoreCase("n") == 0) {
                 for (Viite v : viitteet) {
                     io.print(v.getTunniste() + " (" + v.annaViitteenTyypinNimi() + ")");
