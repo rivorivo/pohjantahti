@@ -115,5 +115,46 @@ public class ViitelistaTest {
         assertEquals("listis",lista.getNimi());
     }
     
+    //viiteiteraattoritestit
+    public ViiteIteraattori itis;
     
+    @Test
+    public void hasNextToimii(){
+        Article a = new Article(); 
+        a.tunniste="t"; 
+        Book b = new Book();
+        b.tunniste="t2";
+        Inproceedings i = new Inproceedings();
+        i.tunniste="t3";
+        lista.add(i);
+        lista.add(a);
+        lista.add(b);
+        itis= new ViiteIteraattori(lista);
+        assertEquals(true,itis.hasNext());        
+    }
+    
+    @Test
+    public void removeToimii(){
+        Article a = new Article(); 
+        a.tunniste="t"; 
+        lista.add(a);
+        itis= new ViiteIteraattori(lista);
+        itis.remove();
+        assertEquals(false,itis.hasNext());        
+    }
+    @Test
+    public void nextToimii(){
+        Article a = new Article(); 
+        a.tunniste="t"; 
+        Book b = new Book();
+        b.tunniste="t2";
+        Inproceedings i = new Inproceedings();
+        i.tunniste="t3";
+        lista.add(i);
+        lista.add(a);
+        lista.add(b);
+        itis= new ViiteIteraattori(lista);
+        assertEquals(itis.next(),i);
+    }
+           
 }
