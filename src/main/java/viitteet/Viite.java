@@ -89,6 +89,20 @@ public abstract class Viite implements java.io.Serializable {
         }
         return false;
     }
+    
+    /**
+     * Kertoo onko tällä viitteellä kenttää nimellä kentanNimi.
+     * @param kentanNimi Haettava kenttä.
+     * @return Palauttaa true jos kentta nimeltä kentanNimi on olemassa, muutoin false.
+     */
+    public boolean onkoKenttaOlemassa(String kentanNimi) {
+        for (int i = 0; i<kentat.length; i++) {
+            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
         
     /**
      * Palauttaa BibTeX-formaatissa viitteen tiedot. Esimerkiksi:

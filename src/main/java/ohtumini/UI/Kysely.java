@@ -133,6 +133,10 @@ public class Kysely {
             tunniste = tunnisteenTarkastusJaKysely();
             if (tunnistettaEiLoydy(tunniste)) return;
             kentta = kentanTarkastusJaKysely();
+            if (!viitteet.get(tunniste).onkoKenttaOlemassa(kentta)) {
+                io.print("Asettaminen ei onnistunut, kenttää ei löytynyt");
+                return;
+            }
             io.print("Tällä hetkellä kentän " + kentta + " arvo on \"" + viitteet.get(tunniste).lueTieto(kentta) + "\"");
             avain = avaimenTarkastusJaKysely(komentoNoCapitalizationChanges);
             viitteet.get(tunniste).lisaaTieto(kentta, avain);
