@@ -18,7 +18,7 @@ scenario "käyttäjä luo viitteen ja poistaa sen ", {
                 kysely.run()
 	}
     then 'Viitettä ei enää löydy viitelistasta' ,{
-		io.getPrints().shouldHave("0 viitettä")
+		io.getPrints().shouldHave("0 viitett")
 	}
 }
 
@@ -34,7 +34,7 @@ scenario "käyttäjä luo viitteen ja poistaa sen ", {
                 kysely.run()
 	}
     then 'Viitettä ei enää löydy viitelistasta' ,{
-		io.getPrints().shouldHave("0 viitettä")
+		io.getPrints().shouldHave("0 viitett")
 	}
 }
 
@@ -57,6 +57,6 @@ scenario "Käyttäjän luo monta viitettä ja poistaa kaksi", {
                 kysely.run()
 	}
         then 'Oikeat viitteet jäävät jäljelle' ,{
-		io.getPrints().shouldHave("2 viitettä","Tunniste1 (Article")
+		io.getPrints().shouldHave("2 viitett","Tunniste1 (Article")
 	}
 }
