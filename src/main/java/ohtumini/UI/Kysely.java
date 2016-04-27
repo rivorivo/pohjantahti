@@ -83,10 +83,14 @@ public class Kysely {
             io.print("Anna kentta " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");
             do {
                 syote = io.readLine("> ");
+                if (syote == " " || syote.length() <= 0) {
+                    io.print("\n"+ kentta + " on pakollinen!");
+                    io.print("Anna " + kentta + "!");
+                }
             } while (uusiViite.onkoPakollinen(kentta) && syote.length() == 0);
             if (syote.length() > 0) {
                 uusiViite.lisaaTieto(kentta, syote);
-            }
+            } 
         }
         io.print("Anna viitteelle tunniste:");
         do {
