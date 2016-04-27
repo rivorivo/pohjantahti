@@ -121,8 +121,30 @@ public abstract class Viite implements java.io.Serializable {
             if (lueTieto(kentat1) != null) {
                 palautus += kentat1 + " = {" + lueTieto(kentat1) + "}, \n"; 
             }
-        }
+        }        
         palautus += "}";
+        
+        for (int i = 0; i<palautus.length(); i++) {
+            if (palautus.charAt(i) == 'ä') {
+                palautus = palautus.substring(0, i-1) + "\\\"{a}" + palautus.substring(i+1);
+            }
+            if (palautus.charAt(i) == 'ö') {
+                palautus = palautus.substring(0, i-1) + "\\\"{o}" + palautus.substring(i+1);
+            }
+            if (palautus.charAt(i) == 'å') {
+                palautus = palautus.substring(0, i-1) + "{\\aa}" + palautus.substring(i+1);
+            }
+            if (palautus.charAt(i) == 'Ä') {
+                palautus = palautus.substring(0, i-1) + "\\\"{A}" + palautus.substring(i+1);
+            }
+            if (palautus.charAt(i) == 'Ö') {
+                palautus = palautus.substring(0, i-1) + "\\\"{O}" + palautus.substring(i+1);
+            }
+            if (palautus.charAt(i) == 'Å') {
+                palautus = palautus.substring(0, i-1) + "{\\AA}" + palautus.substring(i+1);
+            }
+        }
+        
         return palautus;
     }
     

@@ -28,19 +28,17 @@ public class Kysely {
     }
 
     public void run() {
-        String komentoNoCapitalizationChanges;
         tuloste.tulostaKomennot();
         while (running) {
-            komentoNoCapitalizationChanges = io.readLine(">");
-            this.komento = komentoNoCapitalizationChanges.toLowerCase(Locale.ROOT);
-            aloitaKysely(komentoNoCapitalizationChanges);
+            this.komento = io.readLine(">");
+            aloitaKysely();
         }
     }
 
-    public void aloitaKysely(String komentoNoCapitalizationChanges) {
+    public void aloitaKysely() {
         luoViite();
         tulostaViite();
-        asetaKentta(komentoNoCapitalizationChanges);
+        asetaKentta();
         tulostaBibTeX();
         luoBibTex();
         komennot();
@@ -56,7 +54,7 @@ public class Kysely {
     //luo-viite 
     //"1"
     public void luoViite() {
-        if (komento.startsWith("luo-viite") || komento.split(" ")[0].compareTo("1") == 0) {
+        if (komento.split(" ")[0].compareToIgnoreCase("luo-viite") == 0 || komento.split(" ")[0].compareTo("1") == 0) {
             tuloste.tulostaLuoUusiViiteKomennot();
             io.print("Anna viitteen tyyppi");
             String kasky = io.readLine("> ");
@@ -66,13 +64,13 @@ public class Kysely {
 
     public void aloitaAlikysely(String kasky) {
         Viite uusiViite;
-        if (kasky.startsWith("article") || kasky.startsWith("1")) {
+        if (kasky.split(" ")[0].compareToIgnoreCase("article") == 0 || kasky.startsWith("1")) {
             io.print("Uusi article viite luotu");
             uusiViite = new Article();
-        } else if (kasky.startsWith("book") || kasky.startsWith("2")) {
+        } else if (kasky.split(" ")[0].compareToIgnoreCase("book") == 0 || kasky.startsWith("2")) {
             io.print("Uusi book viite luotu");
             uusiViite = new Book();
-        } else if (kasky.startsWith("inproceedings") || kasky.startsWith("3")) {
+        } else if (kasky.split(" ")[0].compareToIgnoreCase("inproceedings") == 0 || kasky.startsWith("3")) {
             io.print("Uusi inproceedings viite luotu");
             uusiViite = new Inproceedings();
         } else {
@@ -112,7 +110,7 @@ public class Kysely {
     //"2"
     public void tulostaViite() {
         String tunniste;
-        if (komento.startsWith("tulosta-viite") || komento.startsWith("2")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("tulosta-viite") == 0 || komento.startsWith("2")) {
             if (komento.split(" ").length < 2) {
                 tunniste = io.readLine("Anna tunniste\n> ");
             } else {
@@ -129,8 +127,8 @@ public class Kysely {
 
     // aseta-kentta <viitteen numero> <kentan nimi> <arvo> 
     //"3"
-    public void asetaKentta(String komentoNoCapitalizationChanges) {
-        if (komento.startsWith("aseta-kentta") || komento.startsWith("3")) {
+    public void asetaKentta() {
+        if (komento.split(" ")[0].compareToIgnoreCase("aseta-kentta") == 0 || komento.startsWith("3")) {
             String tunniste;
             String kentta;
             String avain;
@@ -142,7 +140,7 @@ public class Kysely {
                 return;
             }
             io.print("Tällä hetkellä kentän " + kentta + " arvo on \"" + viitteet.get(tunniste).lueTieto(kentta) + "\"");
-            avain = avaimenTarkastusJaKysely(komentoNoCapitalizationChanges);
+            avain = avaimenTarkastusJaKysely(komento);
             viitteet.get(tunniste).lisaaTieto(kentta, avain);
             io.print("Asettaminen onnistui");
             io.print(tunniste + ":" + kentta + " = \"" + viitteet.get(tunniste).lueTieto(kentta) + "\"");
@@ -196,7 +194,7 @@ public class Kysely {
     // tulosta-bibtex <viitteen numero> 
     //"4"
     public void tulostaBibTeX() {
-        if (komento.startsWith("tulosta-bibtex") || komento.startsWith("4")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("tulosta-bibtex") == 0 || komento.startsWith("4")) {
             String tunniste;
             if (komento.split(" ").length > 1) {
                 tunniste = komento.split(" ")[1];
@@ -214,7 +212,7 @@ public class Kysely {
     // luo bibtext tiedoston viitteistä 
     //"5"
     public void luoBibTex() {
-        if (komento.startsWith("luo-bibtex-tiedosto") || komento.startsWith("5")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("luo-bibtex-tiedosto") == 0 || komento.startsWith("5")) {
             io.print("Anna tiedostonimi mihin BibTex tulostetaan:");
             try {
                 String nimi = io.readLine("> ");
@@ -233,7 +231,7 @@ public class Kysely {
     //listaa viitteet
     //"6"
     public void listaaViitteet() {
-        if (komento.startsWith("listaa-viitteet") || komento.startsWith("6")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("listaa-viitteet") == 0 || komento.startsWith("6")) {
             String pitkaVaiLyhyt;
             io.print("Tulostetaanko vain lyhyt versio kustakin viitteestä? Y/n");
             pitkaVaiLyhyt = io.readLine("> ");
@@ -254,7 +252,7 @@ public class Kysely {
     
     public void poistaViite() {
         String tunniste;
-        if (komento.startsWith("poista-viite") || komento.startsWith("7")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("poista-viite") == 0 || komento.startsWith("7")) {
             if (komento.split(" ").length < 2) {
                 tunniste = io.readLine("Anna tunniste\n> ");
             } else {
@@ -276,13 +274,13 @@ public class Kysely {
     //tulostaa komennot 
     //"7"
     public void komennot() {
-        if (komento.startsWith("komennot") || komento.startsWith("8") || komento.length() == 0) {
+        if (komento.split(" ")[0].compareToIgnoreCase("komennot") == 0 || komento.startsWith("8") || komento.length() == 0) {
             tuloste.tulostaKomennot();
         }
     }
 
     public void lataaTiedosto() {
-        if (komento.startsWith("lataa") || komento.startsWith("9")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("lataa") == 0 || komento.startsWith("9")) {
             if (viitteet.size() > 0) {
                 if (!varmistus("Sinulla on viitteitä, muutokset katoavat jos lataat päälle uudet! Oletko varma?")) {
                     return;
@@ -299,7 +297,7 @@ public class Kysely {
     }
 
     public void tallennaTiedostoon() {
-        if (komento.startsWith("tallenna") || komento.startsWith("10")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("tallenna") == 0 || komento.startsWith("10")) {
             new TallennusKysely(io, viitteet).suorita();
         }
     }
@@ -307,7 +305,7 @@ public class Kysely {
     // luo bibtext tiedoston viitteistä 
     //"10"
     public void lopeta() {
-        if (komento.startsWith("lopeta") || komento.startsWith("11")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("lopeta") == 0 || komento.startsWith("11")) {
             if (varmistus("Tallennetaanko muutokset?")) {
                 new TallennusKysely(io, viitteet).suorita();
             }
@@ -322,7 +320,7 @@ public class Kysely {
 
     //EasyB:tä varten ainakin Joda Koska startsWith
     public void lopetaTallentamatta() {
-        if (komento.startsWith("tallentamatta-lopeta")) {
+        if (komento.split(" ")[0].compareToIgnoreCase("tallentamatta-lopeta") == 0) {
             running = false;
         }
     }
