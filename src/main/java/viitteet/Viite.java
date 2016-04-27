@@ -124,28 +124,18 @@ public abstract class Viite implements java.io.Serializable {
         }        
         palautus += "}";
         
-        for (int i = 0; i<palautus.length(); i++) {
-            if (palautus.charAt(i) == 'ä') {
-                palautus = palautus.substring(0, i) + "\\\"{a}" + palautus.substring(i+1);
-            }
-            if (palautus.charAt(i) == 'ö') {
-                palautus = palautus.substring(0, i) + "\\\"{o}" + palautus.substring(i+1);
-            }
-            if (palautus.charAt(i) == 'å') {
-                palautus = palautus.substring(0, i) + "{\\aa}" + palautus.substring(i+1);
-            }
-            if (palautus.charAt(i) == 'Ä') {
-                palautus = palautus.substring(0, i) + "\\\"{A}" + palautus.substring(i+1);
-            }
-            if (palautus.charAt(i) == 'Ö') {
-                palautus = palautus.substring(0, i) + "\\\"{O}" + palautus.substring(i+1);
-            }
-            if (palautus.charAt(i) == 'Å') {
-                palautus = palautus.substring(0, i) + "{\\AA}" + palautus.substring(i+1);
-            }
-        }
-        
+        palautus = skanditBibteXiksi(palautus);
         return palautus;
+    }
+    
+    private String skanditBibteXiksi(String s) {
+        s = s.replace("ä", "\\\"{a}");
+        s = s.replace("ö", "\\\"{o}");
+        s = s.replace("Ä", "\\\"{A}");
+        s = s.replace("Ö", "\\\"{O}");
+        s = s.replace("å", "{\\aa}");
+        s = s.replace("Å", "{\\AA}");
+        return s;
     }
     
     /**
