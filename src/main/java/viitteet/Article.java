@@ -27,6 +27,8 @@ public class Article extends Viite {
         avaimet = new String[kentat.length];
         super.pakollisuus = pakollisuus;
         super.kentat = kentat;
+        super.kenttaIndeksit = new int[kentat.length];
+
     }
 
     @Override

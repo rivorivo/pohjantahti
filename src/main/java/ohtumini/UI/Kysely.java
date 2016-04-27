@@ -65,13 +65,13 @@ public class Kysely {
     public void aloitaAlikysely(String kasky) {
         Viite uusiViite;
         if (kasky.split(" ")[0].compareToIgnoreCase("article") == 0 || kasky.startsWith("1")) {
-            io.print("Uusi article viite luotu");
+            io.print("Luodaan uusi article-viite");
             uusiViite = new Article();
         } else if (kasky.split(" ")[0].compareToIgnoreCase("book") == 0 || kasky.startsWith("2")) {
-            io.print("Uusi book viite luotu");
+            io.print("Luodaan uusi book-viite");
             uusiViite = new Book();
         } else if (kasky.split(" ")[0].compareToIgnoreCase("inproceedings") == 0 || kasky.startsWith("3")) {
-            io.print("Uusi inproceedings viite luotu");
+            io.print("Luodaan uusi inproceedings-viite");
             uusiViite = new Inproceedings();
         } else {
             io.print("\n");
@@ -81,15 +81,24 @@ public class Kysely {
         String syote;
         for (String kentta : uusiViite.kentat()) {
             io.print("Anna kentta " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");
+            int kentanIndeksi = -1;
+            int vaihtoehtoja = kentta.split("/").length;
             do {
+                kentanIndeksi++;
+                if (kentanIndeksi >= vaihtoehtoja) {
+                    kentanIndeksi = 0;
+                }
+                if (vaihtoehtoja > 1) {
+                    io.print("Anna " + kentta.split("/")[kentanIndeksi] + ", tai anna tyhjä rivi ohittaaksesi");
+                }
                 syote = io.readLine("> ");
-                if (syote == " " || syote.length() <= 0) {
+                if (uusiViite.onkoPakollinen(kentta) && syote.trim().length() <= 0 && kentanIndeksi + 1 == vaihtoehtoja) {
                     io.print("\n"+ kentta + " on pakollinen!");
                     io.print("Anna " + kentta + "!");
                 }
-            } while (uusiViite.onkoPakollinen(kentta) && syote.length() == 0);
+            } while ((kentanIndeksi + 1 < vaihtoehtoja || uusiViite.onkoPakollinen(kentta)) && syote.length() == 0);
             if (syote.length() > 0) {
-                uusiViite.lisaaTieto(kentta, syote);
+                uusiViite.lisaaTieto(kentta, syote, kentanIndeksi);
             } 
         }
         io.print("Anna viitteelle tunniste:");

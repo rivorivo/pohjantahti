@@ -118,6 +118,7 @@ public class ViiteTest {
         public ViiteImpl() {
             avaimet = new String[kentat.length];
             super.kentat = kentat;
+            super.kenttaIndeksit = new int[kentat.length];
         }
 
         public String annaViitteenTyypinNimi() {
