@@ -51,7 +51,8 @@ scenario "käyttäjä voi tulostaa bibtex muodossa olevan viitteen jota ei ole o
 scenario "käyttäjä voi tulostaa bibtex muodossa olevan viitteen", {
     given 'käsky lisää uusi viite valittu', {	
                 io = new StubIO("luo-viite","article","Testi1","Testi2","Testi3","Testi4", "Testi5",
-                    "Testi6","Testi7","Testi8","Testi9","Testi10","TunnisteABCD","tulosta-bibtex", "TunnisteABCD")              
+                    "Testi6","Testi7","Testi8","Testi9","Testi10","TunnisteABCD",
+                    "tulosta-bibtex", "TunnisteABCD")              
                 kysely = new Kysely(io)			
     	}
     when 'tunniste annettu', {

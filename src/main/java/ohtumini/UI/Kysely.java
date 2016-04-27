@@ -133,7 +133,7 @@ public class Kysely {
             String kentta;
             String avain;
             tunniste = tunnisteenTarkastusJaKysely();
-            if (tunnistettaEiLoydy(tunniste)) return;
+            if (!onkoTunniste(tunniste)) return;
             kentta = kentanTarkastusJaKysely();
             if (!viitteet.get(tunniste).onkoKenttaOlemassa(kentta)) {
                 io.print("Asettaminen ei onnistunut, kenttää ei löytynyt");
@@ -159,12 +159,12 @@ public class Kysely {
     }
 
     //Tarkastaa onko annettu tunniste validi.
-    public boolean tunnistettaEiLoydy(String tunniste) {
+    private boolean onkoTunniste(String tunniste) {
         if (viitteet.get(tunniste) == null) {
             io.print("Tunnistetta ei löytynyt");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
     
     //tarkastaa onko kentta asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan kentän.
@@ -201,8 +201,7 @@ public class Kysely {
             } else {
                 tunniste = io.readLine("Anna tunniste\n> ");
             }
-            if (viitteet.get(tunniste) == null) {
-                io.print("Tunnistetta ei löytynyt");
+            if (!onkoTunniste(tunniste)) {
                 return;
             }
             io.print(viitteet.get(tunniste).luoBibTeX());
