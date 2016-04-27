@@ -126,22 +126,22 @@ public abstract class Viite implements java.io.Serializable {
         
         for (int i = 0; i<palautus.length(); i++) {
             if (palautus.charAt(i) == 'ä') {
-                palautus = palautus.substring(0, i-1) + "\\\"{a}" + palautus.substring(i+1);
+                palautus = palautus.substring(0, i) + "\\\"{a}" + palautus.substring(i+1);
             }
             if (palautus.charAt(i) == 'ö') {
-                palautus = palautus.substring(0, i-1) + "\\\"{o}" + palautus.substring(i+1);
+                palautus = palautus.substring(0, i) + "\\\"{o}" + palautus.substring(i+1);
             }
             if (palautus.charAt(i) == 'å') {
-                palautus = palautus.substring(0, i-1) + "{\\aa}" + palautus.substring(i+1);
+                palautus = palautus.substring(0, i) + "{\\aa}" + palautus.substring(i+1);
             }
             if (palautus.charAt(i) == 'Ä') {
-                palautus = palautus.substring(0, i-1) + "\\\"{A}" + palautus.substring(i+1);
+                palautus = palautus.substring(0, i) + "\\\"{A}" + palautus.substring(i+1);
             }
             if (palautus.charAt(i) == 'Ö') {
-                palautus = palautus.substring(0, i-1) + "\\\"{O}" + palautus.substring(i+1);
+                palautus = palautus.substring(0, i) + "\\\"{O}" + palautus.substring(i+1);
             }
             if (palautus.charAt(i) == 'Å') {
-                palautus = palautus.substring(0, i-1) + "{\\AA}" + palautus.substring(i+1);
+                palautus = palautus.substring(0, i) + "{\\AA}" + palautus.substring(i+1);
             }
         }
         
