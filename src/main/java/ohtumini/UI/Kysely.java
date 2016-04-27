@@ -310,6 +310,11 @@ public class Kysely {
             running = false;
         }
     }
+    
+    // palauttaa tiedon siitä onko ohjelma ajossa
+    public boolean getRunning(){
+        return running;
+    }
 
     //EasyB:tä varten ainakin Joda Koska startsWith
     public void lopetaTallentamatta() {
@@ -327,4 +332,6 @@ public class Kysely {
         }
         return (yn.startsWith("y") || yn.startsWith("k"));
     }
+    
+    
 }
