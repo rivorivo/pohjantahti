@@ -63,14 +63,14 @@ public abstract class Viite implements java.io.Serializable {
      * @param avain Uusi arvo.
      */
     public void lisaaTieto(String kentanNimi, String avain) {
-        lisaaTieto(kentanNimi, avain, 0);
-    }
-
-    public void lisaaTieto(String kentanNimi, String avain, int moneskoKentta) {
         for (int i = 0; i < kentat.length; i++) {
-            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
+            if (moneskoKentta(kentat[i], kentanNimi) == kentat[i].split("/").length) {
                 avaimet[i] = avain;
-                kenttaIndeksit[i] = moneskoKentta;
+                return;
+            }
+            if (moneskoKentta(kentat[i], kentanNimi) >= 0) {
+                avaimet[i] = avain;
+                kenttaIndeksit[i] = moneskoKentta(kentat[i], kentanNimi);
                 return;
             }
         }
@@ -95,18 +95,49 @@ public abstract class Viite implements java.io.Serializable {
     public String lueTieto(String kentanNimi) {
         int i = onkoKentta(kentanNimi);
         if (i == -1) return null;
+        
+        //tarkistetaan onko kyse samasta kentästä, Author/Editor kentän kysely
+        //Editor-kentällä, kun Author-kenttä on asetettu, tulee palauttaa null.
+        if (moneskoKentta(kentat[i], kentanNimi) < kentat[i].split("/").length) {
+            if (moneskoKentta(kentat[i], kentanNimi) != kenttaIndeksit[i]) {
+                return null;
+            }
+        }
         return avaimet[i];
     }
+    
+    /**
+     * palauttaa kentan indeksin kentat-taulukossa mikäli String vastaa kenttää.
+     * Mikäli string ei vastaa kenttää, palautetaan -1. Esimerkiksi book-luokalla
+     * onkoKentta("Author/Editor"), onkoKentta("Author") ja onkoKentta("Editor")
+     * palauttavat 0.
+     * @param kentanNimi
+     * @return 
+     */
     private int onkoKentta(String kentanNimi) {
         for (int i = 0; i < kentat.length; i++) {
-            if (kentat[i].compareToIgnoreCase(kentanNimi) == 0) {
+            if (moneskoKentta(kentat[i], kentanNimi) >= 0) return i;
+        }
+        return -1;
+    }
+    
+    /**
+     * Palauttaa monesko "/"-merkillä erotettu osajono verrattava on joukosta kentta.
+     * 
+     * @param kentta Haluttu kenttä johon verrataan, esim "Author/Editor".
+     * @param verrattava String joka ehkä mätsää kentän kanssa
+     * @return -1 jos ei mätsää, numero joka vastaa osuvaa alijonoa mikäli alijonomätsi,
+     * tai "/"-merkillä eroteltujen alijonojen määrä jos esimerkiksi 
+     * kentta = "Author/Editor" ja verrattava = "Author/Editor".
+     */
+    private int moneskoKentta(String kentta, String verrattava) {
+        for (int i = 0; i < kentta.split("/").length; i++) {
+            if (kentta.split("/")[i].compareToIgnoreCase(verrattava) == 0) {
                 return i;
             }
-            for (String split : kentat[i].split("/")) {
-                if (split.compareToIgnoreCase(kentanNimi) == 0) {
-                    return i;
-                }
-            }
+        }        
+        if (kentta.compareToIgnoreCase(verrattava) == 0) {
+            return kentta.split("/").length;
         }
         return -1;
     }

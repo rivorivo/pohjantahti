@@ -98,7 +98,7 @@ public class Kysely {
                 }
             } while ((kentanIndeksi + 1 < vaihtoehtoja || uusiViite.onkoPakollinen(kentta)) && syote.length() == 0);
             if (syote.length() > 0) {
-                uusiViite.lisaaTieto(kentta, syote, kentanIndeksi);
+                uusiViite.lisaaTieto(kentta.split("/")[kentanIndeksi], syote);
             } 
         }
         io.print("Anna viitteelle tunniste:");

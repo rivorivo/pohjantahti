@@ -100,3 +100,34 @@ scenario "Käyttäjälle näytetään edellinen arvo muokatessa kenttien arvoja"
 		io.getPrints().shouldHave("Tällä hetkellä kentän Author arvo on \"Testi1\"")
 	}
 }
+scenario "Käyttäjä voi muokata Author/Editor kentän avainta antamalla kentän nimeksi Editor", {
+    given 'Uusi kirjaviite luotu, siitä asetettu Author-kenttä, ja Editor-kenttää muokattu', {		
+                io = new StubIO("luo-viite","book","Testi1","Testi2","Testi3","Testi4", "Testi5",
+                    "Testi6","Testi7","Testi8","Testi9","Testi10", "Testi11","Tunniste",
+                    "aseta-kentta", "Tunniste", "Editor", "uusi",
+                    "tulosta-bibtex", "Tunniste")
+                kysely = new Kysely(io)	
+    	}
+    when 'Uusi viite luotu, sitä muokataan', {
+                kysely.run()
+	}
+    then 'Editor-kentän tulisi olla oikeanlainen' ,{
+		io.getPrints().shouldHave("Editor = {uusi}")
+	}
+}
+
+scenario "Käyttäjä voi muokata Author/Editor kentän avainta antamalla kentän nimeksi Author/Editor", {
+    given 'Uusi kirjaviite luotu, siitä asetettu Editor-kenttä, ja Editor-kenttää muokattu', {		
+                io = new StubIO("luo-viite","book", "", "Testi1","Testi2","Testi3","Testi4", "Testi5",
+                    "Testi6","Testi7","Testi8","Testi9","Testi10", "Testi11","Tunniste",
+                    "aseta-kentta", "Tunniste", "Author/Editor", "uusi",
+                    "tulosta-bibtex", "Tunniste")
+                kysely = new Kysely(io)	
+    	}
+    when 'Uusi viite luotu, sitä muokataan', {
+                kysely.run()
+	}
+    then 'Editor-kentän tulisi olla oikeanlainen' ,{
+		io.getPrints().shouldHave("Editor = {uusi}")
+	}
+}
