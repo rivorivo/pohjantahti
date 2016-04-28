@@ -107,5 +107,21 @@ public class DataTiedostoTest {
             fail("tiedoston nimen vaihto");
         }
     }
+    
+        /**
+     * Test of asetaNimi method, of class DataTiedosto.
+     */
+    @Test
+    public void testAsetaRflistNimi() {
+        try {
+            t.asetaNimi("uusinimi.rflist");
+            t.luoTiedosto();
+            File f = new File("uusinimi.rflist");
+            assertTrue(f.exists());
+            f.delete();
+        } catch (Exception ex) {
+            fail("tiedoston nimen vaihto");
+        }
+    }
 
 }

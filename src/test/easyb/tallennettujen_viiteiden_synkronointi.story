@@ -9,7 +9,7 @@ description 'Viitelistat voidaan tallentaa ja tallennus ladata (synkronointi)'
 
 scenario "Kayttaja tallentaa viitelistan ilman nimea",{
     given 'uusi kysely avataan', {
-         io = new StubIO("tallenna" ,"")
+         io = new StubIO("tallenna", "")
          kysely = new Kysely(io)
     }
     when 'viitte listan tallennus valittu ja hyvaksytty', {
@@ -17,6 +17,19 @@ scenario "Kayttaja tallentaa viitelistan ilman nimea",{
     }
     then 'ilmoitetaan tallennuksen onnistuneen', {
         io.getPrints().shouldHave("Tallennus onnistui!")
+    }
+}
+
+scenario "Kayttaja valitsee kaytossa olevan nimen toistakertaa",{
+    given 'uusi kysely avataan', {
+         io = new StubIO("tallenna", "", "n", "")
+         kysely = new Kysely(io)
+    }
+    when 'viitte listan lataus valittu ja hyvaksytty', {
+         kysely.run()
+    }
+    then 'ilmoitetaan tallennuksen epaonnistuneen', {  
+        io.getPrints().shouldHave("Tallennus ei onnistunut.")
     }
 }
 

@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,18 +19,11 @@ public class BibTexTiedostoTest {
     public BibTexTiedostoTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         try {
             t = new BibTexTiedosto("testi");
+            t.luoTiedosto();
         } catch (IOException ex) {
 
         }
@@ -53,19 +44,35 @@ public class BibTexTiedostoTest {
     }
 
     /**
-     * Testataan tiedoston luonti, jos ei olemassa
+     * Testataan tiedoston luonti kun nimessä valmiiksi .bib pääte
      */
     @Test
-    public void testLuoTiedostoVarmistus() {
+    public void testLuoTiedostoNimessäBibValmiiksi() {
         try {
-            BibTexTiedosto t2 = new BibTexTiedosto("testi2");
+            BibTexTiedosto t2 = new BibTexTiedosto("testi2.bib");
+            t2.luoTiedosto();
             File file = new File("testi2.bib");
             assertTrue("Tiedosto ei luotu kun ei valmiiksi olemassa", file.exists());
             t2.poistaTiedosto();
         } catch (IOException ex) {
             fail("Tiedoston luonti ei onnistu");
         }
+    }
 
+    /**
+     * Testataan tiedoston luonti, jos ei olemassa
+     */
+    @Test
+    public void testLuoTiedostoVarmistus() {
+        try {
+            BibTexTiedosto t2 = new BibTexTiedosto("testi2");
+            t2.luoTiedosto();
+            File file = new File("testi2.bib");
+            assertTrue("Tiedosto ei luotu kun ei valmiiksi olemassa", file.exists());
+            t2.poistaTiedosto();
+        } catch (IOException ex) {
+            fail("Tiedoston luonti ei onnistu");
+        }
     }
 
     /**
@@ -73,8 +80,7 @@ public class BibTexTiedostoTest {
      */
     @Test
     public void testPoistaTiedosto() {
-        assertTrue("Tiedosto ei luotu oikealla nimellä", t.poistaTiedosto());
-
+        assertTrue("Tiedoston poistaminen ei onnistunut", t.poistaTiedosto());
     }
 
     /**

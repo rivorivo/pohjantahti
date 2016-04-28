@@ -66,7 +66,7 @@ scenario "Olemassaoleva viite ei muokkaannu jos olematonta viitettä muokataan",
                 kysely.run()
 	}
     then 'viite säilynyt ennallaan, näkyy oikein, ja virheilmoitus annettu virheellisestä tunnisteesta' ,{
-		io.getPrints().shouldHave("Tunnistetta ei löytynyt","Author: Testi1\nTitle: Testi2\nJournal: Testi3\nYear: Testi4")
+		io.getPrints().shouldHave("Tunnistetta ei ","Author: Testi1\nTitle: Testi2\nJournal: Testi3\nYear: Testi4")
 	}
 }
 
@@ -82,7 +82,7 @@ scenario "Olemassaoleva viite ei muokkaannu jos olematonta kenttää muokataan",
                 kysely.run()
 	}
     then 'viite säilynyt ennallaan, näkyy oikein, ja virheilmoitus annettu virheellisestä kentästä' ,{
-		io.getPrints().shouldHave("Asettaminen ei onnistunut, kenttää ei löytynyt","Author: Testi1\nTitle: Testi2\nJournal: Testi3\nYear: Testi4\nVolume: Testi5\nNumber: Testi6\nPages: Testi7\nMonth: Testi8\nNote: Testi9\nKey: Testi10")
+		io.getPrints().shouldHave("Asettaminen ei onnistunut, ","Author: Testi1\nTitle: Testi2\nJournal: Testi3\nYear: Testi4\nVolume: Testi5\nNumber: Testi6\nPages: Testi7\nMonth: Testi8\nNote: Testi9\nKey: Testi10")
 	}
 }
 
@@ -97,7 +97,7 @@ scenario "Käyttäjälle näytetään edellinen arvo muokatessa kenttien arvoja"
                 kysely.run()
 	}
     then 'viitteen edellinen arvo tulostetaan nähtäville' ,{
-		io.getPrints().shouldHave("Tällä hetkellä kentän Author arvo on \"Testi1\"")
+		io.getPrints().shouldHave(" Author arvo on \"Testi1\"")
 	}
 }
 scenario "Käyttäjä voi muokata Author/Editor kentän avainta antamalla kentän nimeksi Editor", {

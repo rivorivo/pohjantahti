@@ -6,35 +6,55 @@ import ohtumini.bibtex.DataTiedosto;
 import ohtumini.io.IO;
 import viitteet.Viitelista;
 
+/**
+ *
+ * @author Simo
+ */
 public class TallennuksenLatausKysely {
 
-    private final IO io;
+    private final IO IO;
     private Viitelista ladattuViitelista;
 
+    /**
+     * Luo uuden latauskyselyn
+     *
+     * @param io
+     */
     public TallennuksenLatausKysely(IO io) {
-        this.io = io;
+        this.IO = io;
     }
 
+    /**
+     * Käynnistää latauskyselyn
+     */
     public void suorita() {
         ArrayList<File> f = haetiedostot();
         String s = luetteleTiedostot(f);
         if (!s.isEmpty()) {
-            io.print("Käytettävissä olevat tiedostot:");
-            io.print(s);
+            IO.print("Käytettävissä olevat tiedostot:");
+            IO.print(s);
             lataaTiedosto(f);
         } else {
-            io.print("Kansiossa ei ole tiedostoja joita ladata!");
+            IO.print("Kansiossa ei ole tiedostoja joita ladata!");
         }
     }
 
+    /**
+     * 
+     * @return palauttaa Viitelistan, joka ladattiin tiedostosta
+     */
+    public Viitelista getLadattuViitelista() {
+        return ladattuViitelista;
+    }
+
     private void lataaTiedosto(ArrayList<File> fi) {
-        io.print("Mikä tiedosto ladataan?");
-        String nimi = io.readLine("> ");
+        IO.print("Mikä tiedosto ladataan?");
+        String nimi = IO.readLine("> ");
         File f = haeTiedosto(nimi, fi);
         if (f.exists()) {
             DataTiedosto t = new DataTiedosto(f);
             ladattuViitelista = t.haeTiedostosta();
-            io.print("Tallennuksen lataus onnistui!");
+            IO.print("Tallennuksen lataus onnistui!");
         }
     }
 
@@ -52,28 +72,23 @@ public class TallennuksenLatausKysely {
     }
 
     private ArrayList<File> haetiedostot() {
-        File folder = new File(".");
-        ArrayList<File> f = new ArrayList<>();
-        for (File listFile : folder.listFiles()) {
+        File kansio = new File(".");
+        ArrayList<File> tiedosto = new ArrayList<>();
+        for (File listFile : kansio.listFiles()) {
             if (listFile.isFile() && listFile.getName().contains(".rflist")) {
-                f.add(listFile);
+                tiedosto.add(listFile);
             }
         }
-        return f;
+        return tiedosto;
     }
 
     private String luetteleTiedostot(ArrayList<File> files) {
-        String s = "";
+        String tuloste = "";
         int i = 1;
         for (File file : files) {
-            s += "[" + i + "] " + file.getName() + " ";
+            tuloste += "[" + i + "] " + file.getName() + " ";
             i++;
         }
-        return s;
+        return tuloste;
     }
-
-    public Viitelista getLadattuViitelista() {
-        return ladattuViitelista;
-    }
-
 }

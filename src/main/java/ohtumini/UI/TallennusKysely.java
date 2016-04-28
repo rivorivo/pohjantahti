@@ -5,16 +5,30 @@ import ohtumini.bibtex.DataTiedosto;
 import ohtumini.io.IO;
 import viitteet.Viitelista;
 
+/**
+ *
+ * @author Simo
+ */
 public class TallennusKysely {
 
-    private final IO io;
-    private final Viitelista v;
+    private final IO IO;
+    private final Viitelista VIITELISTA;
 
+    /**
+     * Luo uuden ohjelman tilan tallentamis kyselyn
+     * Ohjelma ei tällähetkellä tallenna 
+     * BibTex tulostettavaksi lisättyjä viitteitä
+     * @param io 
+     * @param v Viitelista, joka tallennetaan tiedostoon
+     */
     public TallennusKysely(IO io, Viitelista v) {
-        this.io = io;
-        this.v = v;
+        this.IO = io;
+        this.VIITELISTA = v;
     }
 
+    /**
+     * Käynnistää tallennus kyselyn
+     */
     public void suorita() {
         String nimi = kyseleNimi();
         DataTiedosto t;
@@ -23,36 +37,40 @@ public class TallennusKysely {
         } else {
             t = new DataTiedosto(nimi);
         }
-
         try {
             if (!t.luoTiedosto()) {
-                
-                String yn = "";
-                while (!(yn.startsWith("n") || yn.startsWith("e") || yn.startsWith("y") || yn.startsWith("k"))) {
-                    io.print("Tiedosto on jo olemassa. Ylikirjoitetaanko?");
-                    yn = io.readLine("Y/n > ").toLowerCase();
-                }
-                if (yn.toLowerCase().startsWith("n") || yn.toLowerCase().startsWith("e")) {
+                if (!varmistus("Tiedosto on jo olemassa. Ylikirjoitetaanko?")) {
                     String nimi2 = kyseleNimi();
                     if (nimi.equals(nimi2)) {
-                        nimi2 += "1";
-                    }
+                        IO.print("Tallennus ei onnistunut. Epäkelpo tiedostonimi.");
+                        return;
+                    } 
                     t.asetaNimi(nimi2);
                     t.luoTiedosto();
                 }
             }
-            t.tallennaTiedostoon(v);
-            io.print("Tallennus onnistui!");
+            t.tallennaTiedostoon(VIITELISTA);
+            IO.print("Tallennus onnistui!");
         } catch (IOException ex) {
-            io.print("Ei voida luoda tiedostoa. Tarkasta kirjoitusoikeudet!");
+            IO.print("Ei voida luoda tiedostoa. Tarkasta kirjoitusoikeudet!");
         }
 
     }
 
+
     private String kyseleNimi() {
-        io.print("Anna tiedostonimi mihin tallennetaan (tyhjä default):");
-        String nimi = io.readLine("> ");
+        IO.print("Anna tiedostonimi mihin tallennetaan (tyhjä default):");
+        String nimi = IO.readLine("> ");
         return nimi;
+    }
+
+    private boolean varmistus(String kysymys) {
+        String yn = "";
+        while (!(yn.startsWith("n") || yn.startsWith("e") || yn.startsWith("y") || yn.startsWith("k"))) {
+            IO.print(kysymys);
+            yn = IO.readLine("y/n > ").toLowerCase();
+        }
+        return (yn.startsWith("y") || yn.startsWith("k"));
     }
 
 }

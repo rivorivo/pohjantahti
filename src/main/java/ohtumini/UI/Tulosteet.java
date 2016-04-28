@@ -29,11 +29,4 @@ public class Tulosteet {
         io.print("- 11 / lopeta:                 Lopettaa ohjelman suorituksen \n");
     }
 
-    public void tulostaLuoUusiViiteKomennot() {
-        io.print("\n" + "Käytettävissä olevat komennot:");
-        io.print("- 1 / article:                Luo uuden article viitteen");
-        io.print("- 2 / book:                   Luo uuden book viitteen");
-        io.print("- 3 / inproceedings:          Luo uuden inproceedings viitteen");
-        io.print("- 4 / palaa:                  Siirtää takaisin päävalikkoon \n");
-    }
 }

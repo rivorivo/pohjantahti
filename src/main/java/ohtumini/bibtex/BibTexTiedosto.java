@@ -18,19 +18,18 @@ public class BibTexTiedosto {
      * Luo uuden tiedoston, johon viitteet tulostetaan BibTex muodossa
      *
      * @param tiedostoNimi tiedostolle annettu nimi
-     * @throws IOException antaa keskeytyksen jos tiedoston luominen ei onnistu
      */
-    public BibTexTiedosto(String tiedostoNimi) throws IOException {
+    public BibTexTiedosto(String tiedostoNimi) {
         this.tiedostoNimi = tarkastaTiedostoNimi(tiedostoNimi);
-        luoTiedostoJosEiOlemassa();
     }
 
     /**
      * Lisää viitteen tiedoston loppuun
      *
      * @param viite viite BibTex muodossa
+     * @return true jos tiedostoon kirjoitus onnistuu
      */
-    public void lisaaViiteTiedostoon(String viite) {
+    public boolean lisaaViiteTiedostoon(String viite) {
         BufferedWriter fw;
         try {
             fw = new BufferedWriter(new FileWriter(tiedosto, true));
@@ -39,12 +38,15 @@ public class BibTexTiedosto {
             fw.newLine();
             fw.flush();
             fw.close();
+            return true;
         } catch (IOException ex) {
+            return false;
         }
     }
 
     /**
      * Poistaa BibTextiä varten luodun tiedoston
+     *
      * @return Palauttaa true jos onnistui
      */
     public boolean poistaTiedosto() {
@@ -52,16 +54,22 @@ public class BibTexTiedosto {
     }
 
     /**
-     * Palauttaa BibText tiedoston nimen
-     * @return 
+     * Palauttaa BibText tiedostonimen
+     *
+     * @return BibText tiedostonimi
      */
     public String getTiedostoNimi() {
         return tiedostoNimi;
     }
 
-    private void luoTiedostoJosEiOlemassa() throws IOException {
+    /**
+     * Luo tiedoston levylle 
+     * @return true, jos tiedoston luodaan
+     * @throws java.io.IOException Jos kirjoitusoikeudet eivät riitä
+     */
+    public boolean luoTiedosto() throws IOException {
         tiedosto = new File(tiedostoNimi);
-        tiedosto.createNewFile();
+        return tiedosto.createNewFile();
     }
 
     private String tarkastaTiedostoNimi(String nimi) {
@@ -71,5 +79,4 @@ public class BibTexTiedosto {
             return nimi + ".bib";
         }
     }
-
 }

@@ -46,7 +46,7 @@ scenario "ohjelma tulostaa alkutiedot", {
         kysely.run()
     }
     then 'alkutulosteet tulostuvat',{
-        io.getPrints().shouldHave("Käytettävissä olevat komennot:")
+        io.getPrints().shouldHave(" olevat komennot:")
     }
 }
 
