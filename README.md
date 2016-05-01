@@ -10,10 +10,9 @@
 
 
 
+
 Definition of Done.
 
 - User storyn vaatima toiminnallisuus on olemassa, käytettävissä käyttöliittymän kautta ja käyttöliittymä tuo tämän toiminnallisuuden esille. Sallitut syötteet on ilmoitettu, ja ohjelma toimii sallituilla syötteillä oikein. Ohjelma antaa virheilmoituksen virheellisillä syötteillä.
 - EasyB testit tehtynä kaikille relevanteille aspekteille User Storya.
 - Yksikkötestit tehtynä kaikille relevanteille luokille siten, että testikattavuus vähintään 90%. Käyttöliittymän testaus ensisijaisesti EasyB-testien, eikä yksikkötestien kautta.
-
-
