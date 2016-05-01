@@ -94,8 +94,10 @@ public abstract class Viite implements java.io.Serializable {
      */
     public String lueTieto(String kentanNimi) {
         int i = onkoKentta(kentanNimi);
-        if (i == -1) return null;
-        
+        if (i == -1) {
+            return null;
+        }
+
         //tarkistetaan onko kyse samasta kentästä, Author/Editor kentän kysely
         //Editor-kentällä, kun Author-kenttä on asetettu, tulee palauttaa null.
         if (moneskoKentta(kentat[i], kentanNimi) < kentat[i].split("/").length) {
@@ -105,37 +107,41 @@ public abstract class Viite implements java.io.Serializable {
         }
         return avaimet[i];
     }
-    
+
     /**
      * palauttaa kentan indeksin kentat-taulukossa mikäli String vastaa kenttää.
-     * Mikäli string ei vastaa kenttää, palautetaan -1. Esimerkiksi book-luokalla
-     * onkoKentta("Author/Editor"), onkoKentta("Author") ja onkoKentta("Editor")
-     * palauttavat 0.
+     * Mikäli string ei vastaa kenttää, palautetaan -1. Esimerkiksi
+     * book-luokalla onkoKentta("Author/Editor"), onkoKentta("Author") ja
+     * onkoKentta("Editor") palauttavat 0.
+     *
      * @param kentanNimi
-     * @return 
+     * @return
      */
     private int onkoKentta(String kentanNimi) {
         for (int i = 0; i < kentat.length; i++) {
-            if (moneskoKentta(kentat[i], kentanNimi) >= 0) return i;
+            if (moneskoKentta(kentat[i], kentanNimi) >= 0) {
+                return i;
+            }
         }
         return -1;
     }
-    
+
     /**
-     * Palauttaa monesko "/"-merkillä erotettu osajono verrattava on joukosta kentta.
-     * 
+     * Palauttaa monesko "/"-merkillä erotettu osajono verrattava on joukosta
+     * kentta.
+     *
      * @param kentta Haluttu kenttä johon verrataan, esim "Author/Editor".
      * @param verrattava String joka ehkä mätsää kentän kanssa
-     * @return -1 jos ei mätsää, numero joka vastaa osuvaa alijonoa mikäli alijonomätsi,
-     * tai "/"-merkillä eroteltujen alijonojen määrä jos esimerkiksi 
-     * kentta = "Author/Editor" ja verrattava = "Author/Editor".
+     * @return -1 jos ei mätsää, numero joka vastaa osuvaa alijonoa mikäli
+     * alijonomätsi, tai "/"-merkillä eroteltujen alijonojen määrä jos
+     * esimerkiksi kentta = "Author/Editor" ja verrattava = "Author/Editor".
      */
     private int moneskoKentta(String kentta, String verrattava) {
         for (int i = 0; i < kentta.split("/").length; i++) {
             if (kentta.split("/")[i].compareToIgnoreCase(verrattava) == 0) {
                 return i;
             }
-        }        
+        }
         if (kentta.compareToIgnoreCase(verrattava) == 0) {
             return kentta.split("/").length;
         }
@@ -151,8 +157,12 @@ public abstract class Viite implements java.io.Serializable {
      */
     public boolean onkoPakollinen(String kentanNimi) {
         int i = onkoKentta(kentanNimi);
-        if (i == -1) return false;
-        if (pakollisuus[i]) return true;
+        if (i == -1) {
+            return false;
+        }
+        if (pakollisuus[i]) {
+            return true;
+        }
         return false;
     }
 
@@ -177,17 +187,23 @@ public abstract class Viite implements java.io.Serializable {
      * muodossa.
      */
     public String luoBibTeX() {
-        String palautus;
-        palautus = "@" + annaViitteenTyypinNimi() + "{" + getTunniste() + ", \n";
+        StringBuilder bibtexViite = new StringBuilder();
+        bibtexViite.append("@");
+        bibtexViite.append(annaViitteenTyypinNimi());
+        bibtexViite.append("{");
+        bibtexViite.append(getTunniste());
+        bibtexViite.append(", \n");
         for (String kentta : valitutKentat()) {
             if (lueTieto(kentta) != null) {
-                palautus += kentta + " = {" + lueTieto(kentta) + "}, \n";
+                bibtexViite.append(kentta);
+                bibtexViite.append(" = {");
+                bibtexViite.append(lueTieto(kentta));
+                bibtexViite.append("}, \n");
             }
         }
-        palautus += "}";
+        bibtexViite.append("}");
 
-        palautus = skanditBibteXiksi(palautus);
-        return palautus;
+        return skanditBibteXiksi(bibtexViite.toString());
     }
 
     private String skanditBibteXiksi(String s) {
