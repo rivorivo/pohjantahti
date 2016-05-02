@@ -1,5 +1,6 @@
 package ohtumini.UI;
 
+import java.util.HashMap;
 import ohtumini.io.IO;
 import viitteet.Article;
 import viitteet.Book;
@@ -16,9 +17,17 @@ public class LuoViite {
     private final Viitelista VIITTEET;
     private final IO IO;
 
+    HashMap<String, String> viiteTyypit;
+    
     public LuoViite(IO io, Viitelista v) {
         this.VIITTEET = v;
         this.IO = io;
+        
+        viiteTyypit = new HashMap<>();
+        viiteTyypit.put("1", "article");
+        viiteTyypit.put("2", "book");
+        viiteTyypit.put("3", "inproceedings");
+    
     }
 
     public void suorita() {
@@ -35,23 +44,39 @@ public class LuoViite {
         IO.print("- 3 / inproceedings:          Luo uuden inproceedings viitteen");
         IO.print("- 4 / palaa:                  Siirtää takaisin päävalikkoon \n");
     }
+    
+    private Viite tulkkaaKaskyJaLuoViiteOlio(String kasky) {
+        String kaskynEkaOsa = kasky.split(" ")[0].toLowerCase();
+        String kaskynEkaMerkki = "" + kasky.charAt(0);
+        String luokanNimi = null;
+        
+        if (viiteTyypit.containsValue(kaskynEkaOsa)) {
+            luokanNimi = kaskynEkaOsa; 
+        } else if (viiteTyypit.containsKey(kaskynEkaMerkki)) {
+            luokanNimi = viiteTyypit.get(kaskynEkaMerkki);    
+        }
 
-    private void aloitaAlikysely(String kasky) {
-        Viite uusiViite;
-        if (kasky.split(" ")[0].compareToIgnoreCase("article") == 0 || kasky.startsWith("1")) {
-            IO.print("Luodaan uusi article-viite");
-            uusiViite = new Article();
-        } else if (kasky.split(" ")[0].compareToIgnoreCase("book") == 0 || kasky.startsWith("2")) {
-            IO.print("Luodaan uusi book-viite");
-            uusiViite = new Book();
-        } else if (kasky.split(" ")[0].compareToIgnoreCase("inproceedings") == 0 || kasky.startsWith("3")) {
-            IO.print("Luodaan uusi inproceedings-viite");
-            uusiViite = new Inproceedings();
-        } else {
+        try {
+            Class<?> viiteLuokka = Class.forName("viitteet." + luokanNimi.substring(0,1).toUpperCase() + luokanNimi.substring(1, luokanNimi.length()));
+            IO.print("Luodaan uusi " + luokanNimi + "-viite");
+            return (Viite) viiteLuokka.newInstance();
+        } catch (Exception ex) {
             IO.print("\n");
             IO.print("Viitettä ei luotu.");
+        }
+
+        return null;
+    }
+
+
+    private void aloitaAlikysely(String kasky) {
+
+        Viite uusiViite = tulkkaaKaskyJaLuoViiteOlio(kasky);
+        
+        if (uusiViite == null) {
             return;
         }
+        
         String syote;
         for (String kentta : uusiViite.kentat()) {
             IO.print("Anna kentta " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");

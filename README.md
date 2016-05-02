@@ -17,3 +17,4 @@ Definition of Done.
 - Yksikkötestit tehtynä kaikille relevanteille luokille siten, että testikattavuus vähintään 90%. Käyttöliittymän testaus ensisijaisesti EasyB-testien, eikä yksikkötestien kautta.
 
 
+
