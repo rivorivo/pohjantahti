@@ -75,8 +75,13 @@ public class LuoViite {
                 uusiViite.lisaaTieto(kentta.split("/")[kentanIndeksi], syote);
             }
         }
+        boolean virhe = false;
         IO.print("Anna viitteelle tunniste:");
         do {
+            if (virhe) {
+                IO.print("Tunniste on pakollinen.\n Anna viitteelle tunniste:");
+            }
+            virhe = true;
             syote = IO.readLine("> ");
         } while (VIITTEET.get(syote) != null || syote.length() == 0); //Ei anneta luoda
         uusiViite.setTunniste(syote);                                 //useaa viitettä joilla
