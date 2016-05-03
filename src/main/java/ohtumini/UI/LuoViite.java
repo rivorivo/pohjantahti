@@ -15,6 +15,7 @@ public class LuoViite {
 
     private final Viitelista VIITTEET;
     private final IO IO;
+    private Viite uusiViite;
 
     public LuoViite(IO io, Viitelista v) {
         this.VIITTEET = v;
@@ -36,22 +37,55 @@ public class LuoViite {
         IO.print("- 4 / palaa:                  Siirtää takaisin päävalikkoon \n");
     }
 
-    private void aloitaAlikysely(String kasky) {
-        Viite uusiViite;
-        if (kasky.split(" ")[0].compareToIgnoreCase("article") == 0 || kasky.startsWith("1")) {
-            IO.print("Luodaan uusi article-viite");
-            uusiViite = new Article();
-        } else if (kasky.split(" ")[0].compareToIgnoreCase("book") == 0 || kasky.startsWith("2")) {
-            IO.print("Luodaan uusi book-viite");
-            uusiViite = new Book();
-        } else if (kasky.split(" ")[0].compareToIgnoreCase("inproceedings") == 0 || kasky.startsWith("3")) {
-            IO.print("Luodaan uusi inproceedings-viite");
-            uusiViite = new Inproceedings();
-        } else {
+    private void aloitaAlikysely(String komento) {
+                    
+        if (!luotuViite(komento)){
             IO.print("\n");
             IO.print("Viitettä ei luotu.");
             return;
         }
+        
+        kyseleKentat();
+        kyseleTunniste();
+        
+    }
+
+    private void viiteListanKoko() {
+        IO.print("Viitteitä yhteensä: " + VIITTEET.size());
+    }
+    
+    private boolean articleViite(String komento){
+        if (komento.split(" ")[0].compareToIgnoreCase("article") == 0 || komento.startsWith("1")) {
+            IO.print("Luodaan uusi article-viite");
+            uusiViite = new Article();
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean bookViite(String komento){
+        if (komento.split(" ")[0].compareToIgnoreCase("book") == 0 || komento.startsWith("2")) {
+            IO.print("Luodaan uusi book-viite");
+            uusiViite = new Book();
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean inproceedingsViite(String komento){
+        if (komento.split(" ")[0].compareToIgnoreCase("inproceedings") == 0 || komento.startsWith("3")) {
+            IO.print("Luodaan uusi inproceedings-viite");
+            uusiViite = new Inproceedings();
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean luotuViite(String komento){
+        return articleViite(komento) || bookViite(komento) || inproceedingsViite(komento); 
+    }
+    
+    private void kyseleKentat(){
         String syote;
         for (String kentta : uusiViite.kentat()) {
             IO.print("Anna kentta " + kentta + (uusiViite.onkoPakollinen(kentta) ? "*" : "") + ":");
@@ -75,6 +109,10 @@ public class LuoViite {
                 uusiViite.lisaaTieto(kentta.split("/")[kentanIndeksi], syote);
             }
         }
+    }
+    
+    private void kyseleTunniste(){
+        String syote;
         IO.print("Anna viitteelle tunniste:");
         do {
             syote = IO.readLine("> ");
@@ -84,9 +122,4 @@ public class LuoViite {
         IO.print("Viite luotu");
         viiteListanKoko();
     }
-
-    private void viiteListanKoko() {
-        IO.print("Viitteitä yhteensä: " + VIITTEET.size());
-    }
-
 }
