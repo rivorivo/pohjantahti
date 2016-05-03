@@ -44,6 +44,18 @@ scenario "käyttäjä voi lisätä Inproceedings-viitteen", {
               io.getPrints().shouldHave("Viite luotu","Viitteitä yhteensä: 1")
 	}
 }
+scenario "käyttäjä voi lisätä booklet-viitteen", {
+    given 'käsky lisää uusi viite valittu', {		
+              io = new StubIO("luo-viite","inproceedings","Testi1","Testi2","Testi3","Testi4", "Testi5","Testi6","Testi7","Testi8","Tunniste")
+              kysely = new Kysely(io)			
+    	}
+ when 'uusi Inproceedings-viitetyyppi sekä parametrit annettu', {
+              kysely.run()
+	}
+    then 'viite luodaan' ,{
+              io.getPrints().shouldHave("Viite luotu","Viitteitä yhteensä: 1")
+	}
+}
 
 scenario "käyttäjä voi lisätä 2viitettä", {
     given 'käsky lisää uusi viite valittu', {		

@@ -241,7 +241,7 @@ public class Kysely {
         }
     }
 
-    // palauttaa tiedon siitä onko ohjelma ajossa
+    // Palauttaa tiedon siitä onko ohjelma ajossa
     private boolean getRunning() {
         return running;
     }
