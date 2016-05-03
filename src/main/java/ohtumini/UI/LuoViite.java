@@ -5,6 +5,7 @@ import viitteet.Article;
 import viitteet.Book;
 import viitteet.Inproceedings;
 import viitteet.Booklet;
+import viitteet.Inbook;
 import viitteet.Viite;
 import viitteet.Viitelista;
 
@@ -35,6 +36,7 @@ public class LuoViite {
         IO.print("- 2 / book:                   Luo uuden book viitteen");
         IO.print("- 3 / inproceedings:          Luo uuden inproceedings viitteen");
         IO.print("- 4 / booklet:                Luo uuden booklet viitteen");
+        IO.print("- 5 / inbook:                 Luo uuden Inbook viitteen");
         IO.print("- 6 / palaa:                  Siirtää takaisin päävalikkoon \n");
     }
 
@@ -52,6 +54,9 @@ public class LuoViite {
         } else if (kasky.split(" ")[0].compareToIgnoreCase("booklet") == 0 || kasky.startsWith("4")) {
             IO.print("Luodaan uusi booklet-viite");
             uusiViite = new Booklet();
+        } else if (kasky.split(" ")[0].compareToIgnoreCase("inbook") == 0 || kasky.startsWith("5")) {
+            IO.print("Luodaan uusi inbook-viite");
+            uusiViite = new Inbook();
         } else {
             IO.print("\n");
             IO.print("Viitettä ei luotu.");

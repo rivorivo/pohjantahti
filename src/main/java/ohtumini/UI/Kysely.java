@@ -184,6 +184,8 @@ public class Kysely {
         }
     }
     
+    //poistaa halutun viitteen
+    //"7"
     public void poistaViite() {
         String tunniste;
         if (komento.split(" ")[0].compareToIgnoreCase("poista-viite") == 0 || komento.startsWith("7")) {
@@ -205,14 +207,15 @@ public class Kysely {
         }
     }
 
-    //tulostaa komennot 
-    //"7"
+    //tulostaa listan mahdollisista komennoista.
+    //"8"
     public void komennot() {
         if (komento.split(" ")[0].compareToIgnoreCase("komennot") == 0 || komento.startsWith("8") || komento.length() == 0) {
             tuloste.tulostaKomennot();
         }
     }
-
+    //Lataa tiedoston
+    //"9"
     public void lataaTiedosto() {
         if (komento.split(" ")[0].compareToIgnoreCase("lataa") == 0 || komento.startsWith("9")) {
             if (viitteet.size() > 0) {
@@ -230,14 +233,15 @@ public class Kysely {
         }
     }
 
+    //"10"
     public void tallennaTiedostoon() {
         if (komento.split(" ")[0].compareToIgnoreCase("tallenna") == 0 || komento.startsWith("10")) {
             new TallennusKysely(IO, viitteet).suorita();
         }
     }
 
-    // luo bibtext tiedoston viitteistä 
-    //"10"
+    // luo bibtext tiedoston viitteistä .
+    //"11"
     public void lopeta() {
         if (komento.split(" ")[0].compareToIgnoreCase("lopeta") == 0 || komento.startsWith("11")) {
             if (varmistus("Tallennetaanko muutokset?")) {
@@ -247,19 +251,19 @@ public class Kysely {
         }
     }
     
-    // palauttaa tiedon siitä onko ohjelma ajossa
+    // palauttaa tiedon siitä onko ohjelma ajossa.
     public boolean getRunning(){
         return running;
     }
 
-    //EasyB:tä varten ainakin Joda Koska startsWith
+    //EasyB:tä varten ainakin Joda Koska startsWith.
     public void lopetaTallentamatta() {
         if (komento.split(" ")[0].compareToIgnoreCase("tallentamatta-lopeta") == 0) {
             running = false;
         }
     }
 
-    //hyrr hirviö, koska aika
+    //hyrr hirviö, koska aika.
     private boolean varmistus(String kysymys) {
         String yn = "";
         while (!(yn.startsWith("n") || yn.startsWith("e") || yn.startsWith("y") || yn.startsWith("k"))) {
