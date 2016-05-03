@@ -66,10 +66,8 @@ public class DataTiedosto {
             Viitelista v = (Viitelista) q.readObject();
             return v;
         } catch (Exception ex) {
-
-        }
-
-        return new Viitelista("");
+            return null;
+        }        
     }
 
     /**

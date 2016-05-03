@@ -29,7 +29,7 @@ public class Kysely {
         }
     }
 
-    public void aloitaKysely() {
+    private void aloitaKysely() {
         luoViite();
         tulostaViite();
         asetaKentta();
@@ -44,17 +44,15 @@ public class Kysely {
         lopetaTallentamatta();
     }
 
-    //luo-viite 
-    //"1"
-    public void luoViite() {
+    // Aloittaa kyselyn uuden viitteen lisäämiseksi
+    private void luoViite() {
         if (komento.split(" ")[0].compareToIgnoreCase("luo-viite") == 0 || komento.split(" ")[0].compareTo("1") == 0) {
-           new LuoViite(IO, viitteet).suorita();
+            new LuoViite(IO, viitteet).suorita();
         }
     }
 
-    //tulosta-viite <viitteen numero> 
-    //"2"
-    public void tulostaViite() {
+    // Tulosta-viite <viitteen numero> 
+    private void tulostaViite() {
         String tunniste;
         if (komento.split(" ")[0].compareToIgnoreCase("tulosta-viite") == 0 || komento.startsWith("2")) {
             if (komento.split(" ").length < 2) {
@@ -71,14 +69,15 @@ public class Kysely {
         }
     }
 
-    // aseta-kentta <viitteen numero> <kentan nimi> <arvo> 
-    //"3"
-    public void asetaKentta() {
+    // Aseta-kentta <viitteen numero> <kentan nimi> <arvo> 
+    private void asetaKentta() {
         if (komento.split(" ")[0].compareToIgnoreCase("aseta-kentta") == 0 || komento.startsWith("3")) {
             String kentta;
             String avain;
             String tunniste = tunnisteenTarkastusJaKysely();
-            if (!onkoTunniste(tunniste)) return;
+            if (!onkoTunniste(tunniste)) {
+                return;
+            }
             kentta = kentanTarkastusJaKysely();
             if (!viitteet.get(tunniste).onkoKenttaOlemassa(kentta)) {
                 IO.print("Asettaminen ei onnistunut, kenttää ei löytynyt");
@@ -91,9 +90,9 @@ public class Kysely {
             IO.print(tunniste + ":" + kentta + " = \"" + viitteet.get(tunniste).lueTieto(kentta) + "\"");
         }
     }
-    
-    //tarkastaa onko tunniste asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan tunnisteen.
-    public String tunnisteenTarkastusJaKysely() {
+
+    // Tarkastaa onko tunniste asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan tunnisteen.
+    private String tunnisteenTarkastusJaKysely() {
         String tunniste;
         if (komento.split(" ").length > 1) {
             tunniste = komento.split(" ")[1];
@@ -111,9 +110,9 @@ public class Kysely {
         }
         return true;
     }
-    
-    //tarkastaa onko kentta asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan kentän.
-    public String kentanTarkastusJaKysely() {
+
+    // Tarkastaa onko kentta asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan kentän.
+    private String kentanTarkastusJaKysely() {
         String kentta;
         if (komento.split(" ").length > 2) {
             kentta = komento.split(" ")[2];
@@ -124,8 +123,8 @@ public class Kysely {
         return kentta;
     }
 
-    //tarkastaa onko avain asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan avaimen.
-    public String avaimenTarkastusJaKysely(String komentoNoCapitalizationChanges) {
+    // Tarkastaa onko avain asetettu aseta-kentta syötteen yhteydessä. Jos ei niin, pyytää asettamaan avaimen.
+    private String avaimenTarkastusJaKysely(String komentoNoCapitalizationChanges) {
         String avain;
         if (komento.split(" ").length > 3) {
             avain = komentoNoCapitalizationChanges.split(" ", 4)[3];
@@ -136,9 +135,8 @@ public class Kysely {
         return avain;
     }
 
-    // tulosta-bibtex <viitteen numero> 
-    //"4"
-    public void tulostaBibTeX() {
+    // Tulostaa BibTex-muotoisen tulosteen viitteestä
+    private void tulostaBibTeX() {
         if (komento.split(" ")[0].compareToIgnoreCase("tulosta-bibtex") == 0 || komento.startsWith("4")) {
             String tunniste;
             if (komento.split(" ").length > 1) {
@@ -153,38 +151,34 @@ public class Kysely {
         }
     }
 
-    // luo bibtext tiedoston viitteistä 
-    //"5"
-    public void luoBibTex() {
+    // Aloittaa kyselyn BibTex tiedoston luonnista
+    private void luoBibTex() {
         if (komento.split(" ")[0].compareToIgnoreCase("luo-bibtex-tiedosto") == 0 || komento.startsWith("5")) {
             BibtexTiedostoKysely t = new BibtexTiedostoKysely(IO, viitteet, bibTexViitteet);
             bibTexViitteet = t.suorita();
         }
     }
-    
-    //listaa viitteet
-    //"6"
-    public void listaaViitteet() {
+
+    // Listaa ohjelmaan lisätyt viitteet
+    private void listaaViitteet() {
         if (komento.split(" ")[0].compareToIgnoreCase("listaa-viitteet") == 0 || komento.startsWith("6")) {
-            String pitkaVaiLyhyt;
-            IO.print("Tulostetaanko vain lyhyt versio kustakin viitteestä? Y/n");
-            pitkaVaiLyhyt = IO.readLine("> ");
-            IO.print(viitteet.size() + " viitettä");
-            if (pitkaVaiLyhyt.compareToIgnoreCase("n") == 0) {
+            if (!varmistus("Tulostetaanko vain lyhyt versio kustakin viitteestä? Y/n")) {
+                IO.print(viitteet.size() + " viitettä");
                 for (Viite v : viitteet) {
                     IO.print(v.getTunniste() + " (" + v.annaViitteenTyypinNimi() + ")");
                     IO.print(v.toString());
                 }
-            }
-            else {
+            } else {
+                IO.print(viitteet.size() + " viitettä");
                 for (Viite v : viitteet) {
                     IO.print(v.getTunniste() + " (" + v.annaViitteenTyypinNimi() + ")");
                 }
             }
         }
     }
-    
-    public void poistaViite() {
+
+    //Poistaa viitteen tunnisteen perusteella
+    private void poistaViite() {
         String tunniste;
         if (komento.split(" ")[0].compareToIgnoreCase("poista-viite") == 0 || komento.startsWith("7")) {
             if (komento.split(" ").length < 2) {
@@ -205,15 +199,15 @@ public class Kysely {
         }
     }
 
-    //tulostaa komennot 
-    //"7"
-    public void komennot() {
+    // Tulostaa ohjelman komennot
+    private void komennot() {
         if (komento.split(" ")[0].compareToIgnoreCase("komennot") == 0 || komento.startsWith("8") || komento.length() == 0) {
             tuloste.tulostaKomennot();
         }
     }
 
-    public void lataaTiedosto() {
+    // Aloittaa kyselyn ohjelman tilan lataamisesta tiedostoon
+    private void lataaTiedosto() {
         if (komento.split(" ")[0].compareToIgnoreCase("lataa") == 0 || komento.startsWith("9")) {
             if (viitteet.size() > 0) {
                 if (!varmistus("Sinulla on viitteitä, muutokset katoavat jos lataat päälle uudet! Oletko varma?")) {
@@ -230,15 +224,15 @@ public class Kysely {
         }
     }
 
-    public void tallennaTiedostoon() {
+    // Aloittaa kyselyn ohjelman tilanteentallentamisesta tiedostoon
+    private void tallennaTiedostoon() {
         if (komento.split(" ")[0].compareToIgnoreCase("tallenna") == 0 || komento.startsWith("10")) {
             new TallennusKysely(IO, viitteet).suorita();
         }
     }
 
-    // luo bibtext tiedoston viitteistä 
-    //"10"
-    public void lopeta() {
+    // Lopettaa ohjelman ja kysyy tallenetaanko
+    private void lopeta() {
         if (komento.split(" ")[0].compareToIgnoreCase("lopeta") == 0 || komento.startsWith("11")) {
             if (varmistus("Tallennetaanko muutokset?")) {
                 new TallennusKysely(IO, viitteet).suorita();
@@ -246,20 +240,24 @@ public class Kysely {
             running = false;
         }
     }
-    
+
     // palauttaa tiedon siitä onko ohjelma ajossa
-    public boolean getRunning(){
+    private boolean getRunning() {
         return running;
     }
 
-    //EasyB:tä varten ainakin Joda Koska startsWith
-    public void lopetaTallentamatta() {
+    /*
+     * EasyBtä varten komento jolla saadaan ohjelma lopetettua ilman varmistusta
+     */
+    private void lopetaTallentamatta() {
         if (komento.split(" ")[0].compareToIgnoreCase("tallentamatta-lopeta") == 0) {
             running = false;
         }
     }
 
-    //hyrr hirviö, koska aika
+    /*
+     * Kysellään varmistusta toimintoon kunnes annetaan validi vastaus
+     */
     private boolean varmistus(String kysymys) {
         String yn = "";
         while (!(yn.startsWith("n") || yn.startsWith("e") || yn.startsWith("y") || yn.startsWith("k"))) {
@@ -268,6 +266,5 @@ public class Kysely {
         }
         return (yn.startsWith("y") || yn.startsWith("k"));
     }
-    
-    
+
 }

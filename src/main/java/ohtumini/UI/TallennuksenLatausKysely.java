@@ -28,12 +28,12 @@ public class TallennuksenLatausKysely {
      * Käynnistää latauskyselyn
      */
     public void suorita() {
-        ArrayList<File> f = haetiedostot();
-        String s = luetteleTiedostot(f);
+        ArrayList<File> tiedostot = haetiedostot();
+        String s = luetteleTiedostot(tiedostot);
         if (!s.isEmpty()) {
             IO.print("Käytettävissä olevat tiedostot:");
             IO.print(s);
-            lataaTiedosto(f);
+            lataaTiedosto(tiedostot);
         } else {
             IO.print("Kansiossa ei ole tiedostoja joita ladata!");
         }
@@ -47,21 +47,25 @@ public class TallennuksenLatausKysely {
         return ladattuViitelista;
     }
 
-    private void lataaTiedosto(ArrayList<File> fi) {
+    private void lataaTiedosto(ArrayList<File> tiedosto) {
         IO.print("Mikä tiedosto ladataan?");
         String nimi = IO.readLine("> ");
-        File f = haeTiedosto(nimi, fi);
-        if (f.exists()) {
-            DataTiedosto t = new DataTiedosto(f);
+        File file = haeTiedosto(nimi, tiedosto);
+        if (file.exists()) {
+            DataTiedosto t = new DataTiedosto(file);
             ladattuViitelista = t.haeTiedostosta();
+            if (ladattuViitelista == null) {
+                IO.print("Tallennuksen lataus ei onnistunut, tiedosto on virheellinen");
+                return;
+            }
             IO.print("Tallennuksen lataus onnistui!");
         }
     }
 
-    private File haeTiedosto(String nimi, ArrayList<File> f) {
+    private File haeTiedosto(String nimi, ArrayList<File> tiedostot) {
         try {
             int i = Integer.parseInt(nimi);
-            return f.get(i - 1);
+            return tiedostot.get(i - 1);
         } catch (Exception ex) {
             if (!nimi.contains(".rflist")) {
                 nimi += ".rflist";
@@ -82,10 +86,10 @@ public class TallennuksenLatausKysely {
         return tiedosto;
     }
 
-    private String luetteleTiedostot(ArrayList<File> files) {
+    private String luetteleTiedostot(ArrayList<File> tiedostot) {
         String tuloste = "";
         int i = 1;
-        for (File file : files) {
+        for (File file : tiedostot) {
             tuloste += "[" + i + "] " + file.getName() + " ";
             i++;
         }

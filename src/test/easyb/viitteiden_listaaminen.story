@@ -40,13 +40,13 @@ scenario "käyttäjä antaa virheellisen syötteen listauksen kyselyssä", {
     given 'Uusi Viite luotu, ja listaukseen annettu väärä syöte', {		
                 io = new StubIO("luo-viite","article","Testi1","Testi2","Testi3","Testi4", "Testi5",
                     "Testi6","Testi7","Testi8","Testi9","Testi10","Tunniste",
-                    "listaa-viitteet", "")
+                    "listaa-viitteet", "", "y")
                 kysely = new Kysely(io)			
     	}
     when 'uusi viite listattu, ja väärä syöte annettu', {
                 kysely.run()
 	}
-    then 'viite on listattu ja näkyy oikein' ,{
+    then 'kysytty uudelleen, viite on listattu ja näkyy oikein' ,{
 		io.getPrints().shouldHave("Tunniste (Article)")
 	}
 }
