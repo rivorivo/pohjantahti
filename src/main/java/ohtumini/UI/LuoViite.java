@@ -4,6 +4,7 @@ import ohtumini.io.IO;
 import viitteet.Article;
 import viitteet.Book;
 import viitteet.Inproceedings;
+import viitteet.Booklet;
 import viitteet.Viite;
 import viitteet.Viitelista;
 
@@ -33,7 +34,8 @@ public class LuoViite {
         IO.print("- 1 / article:                Luo uuden article viitteen");
         IO.print("- 2 / book:                   Luo uuden book viitteen");
         IO.print("- 3 / inproceedings:          Luo uuden inproceedings viitteen");
-        IO.print("- 4 / palaa:                  Siirtää takaisin päävalikkoon \n");
+        IO.print("- 4 / booklet:                Luo uuden booklet viitteen");
+        IO.print("- 6 / palaa:                  Siirtää takaisin päävalikkoon \n");
     }
 
     private void aloitaAlikysely(String kasky) {
@@ -47,6 +49,9 @@ public class LuoViite {
         } else if (kasky.split(" ")[0].compareToIgnoreCase("inproceedings") == 0 || kasky.startsWith("3")) {
             IO.print("Luodaan uusi inproceedings-viite");
             uusiViite = new Inproceedings();
+        } else if (kasky.split(" ")[0].compareToIgnoreCase("booklet") == 0 || kasky.startsWith("4")) {
+            IO.print("Luodaan uusi booklet-viite");
+            uusiViite = new Booklet();
         } else {
             IO.print("\n");
             IO.print("Viitettä ei luotu.");
