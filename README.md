@@ -16,4 +16,5 @@ Definition of Done.
 - EasyB testit tehtynä kaikille relevanteille aspekteille User Storya.
 - Yksikkötestit tehtynä kaikille relevanteille luokille siten, että testikattavuus vähintään 90%. Käyttöliittymän testaus ensisijaisesti EasyB-testien, eikä yksikkötestien kautta.
 
+[Projektiraportti link](https://docs.google.com/document/d/1vW-4QCeWE3Nk7dL_Lh6Xmd6ZbeR7sq1R3zmawbaeDug/edit?usp=sharing)
 
