@@ -42,3 +42,28 @@ scenario "kysely kysyy toista kenttää",{
         io.getPrints().shouldHave("Title*:")
     }
 }
+scenario "kysely kysyy ensin author ja jos ei annettu, niin editor-kenttää",{
+    given'uusi kysely avataan',{
+        io = new StubIO("luo-viite","book","")
+        kysely = new Kysely(io)
+    }
+    when 'authoria kysyttäessä tyhjä annettu',{
+        kysely.run()
+    }
+    then'kysytään editor',{
+        io.getPrints().shouldHave("Anna Editor, tai anna tyhjä rivi ohittaaksesi")
+    }
+}
+
+scenario "kysely kysyy ensin author ja jos annettu, niin seuraavaksi title",{
+    given'uusi kysely avataan',{
+        io = new StubIO("luo-viite","book","kirjailija")
+        kysely = new Kysely(io)
+    }
+    when 'authoria kysyttäessä author annettu',{
+        kysely.run()
+    }
+    then'kysytään title',{
+        io.getPrints().shouldNotHave("Anna Editor, tai anna tyhjä rivi ohittaaksesi")
+    }
+}
