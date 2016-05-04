@@ -92,15 +92,15 @@ public class BibtexTiedostoKysely {
         osaViitteistaOhje();
         while (true) {
             String komento = IO.readLine(">");
-            if (komento.startsWith("1") || komento.split(" ")[0].compareToIgnoreCase("aloita-lisääminen") == 0) {
+            if (komento.startsWith("1") || komento.split(" ")[0].compareToIgnoreCase("aloita-lisaaminen") == 0) {
                 IO.print("Syötä tiedostoon lisättävien viitteiden tunnisteita. Tyhjä syöte lopettaa lisäämisen.");
                 lisaaViitteitaTulostettavaksi();
                 osaViitteistaOhje();
-            } else if (komento.startsWith("2") || komento.split(" ")[0].compareToIgnoreCase("lisäämättömät-tunnisteet") == 0) {
+            } else if (komento.startsWith("2") || komento.split(" ")[0].compareToIgnoreCase("lisaamattomat-tunnisteet") == 0) {
                 tulostaViitteidenTunnisteet(lisaamattomatViitteet);
-            } else if (komento.startsWith("3") || komento.split(" ")[0].compareToIgnoreCase("lisätyt-tunnisteet") == 0) {
+            } else if (komento.startsWith("3") || komento.split(" ")[0].compareToIgnoreCase("lisatyt-tunnisteet") == 0) {
                 tulostaViitteidenTunnisteet(tulostettavatViitteet);
-            } else if (komento.startsWith("4") || komento.split(" ")[0].compareToIgnoreCase("tyhjennä-lisätyt") == 0) {
+            } else if (komento.startsWith("4") || komento.split(" ")[0].compareToIgnoreCase("tyhjenna-lisatyt") == 0) {
                 if (varmistus("Haluatko varmasti tyhjentää tulsotettavaksi valittujen listan? Y/n")) {
                     tyhjennaLisatyt();
                 }
@@ -119,10 +119,10 @@ public class BibtexTiedostoKysely {
     }
 
     private void osaViitteistaOhje() {
-        IO.print("- 1 / aloita-lisääminen               lisää viitteitä, kunnes syötät tyhjän");
-        IO.print("- 2 / lisäämättömät-tunnisteet        tulostaa lisäämättämien viitteiden tunnisteet");
-        IO.print("- 3 / lisätyt-tunnisteet              tulostaa tulostettaviksi lisätyt viitteiden tunnisteet");
-        IO.print("- 4 / tyhjennä-lisätyt                tyhjentää tulostukseen lisättyjen listan");
+        IO.print("- 1 / aloita-lisaaminen               lisää viitteitä, kunnes syötät tyhjän");
+        IO.print("- 2 / lisaamattomat-tunnisteet        tulostaa lisäämättämien viitteiden tunnisteet");
+        IO.print("- 3 / lisatyt-tunnisteet              tulostaa tulostettaviksi lisätyt viitteiden tunnisteet");
+        IO.print("- 4 / tyhjenna-lisatyt                tyhjentää tulostukseen lisättyjen listan");
         IO.print("- 5 / luo-kaikista                    luo BibTex-tiedoston kaikista viitteistä");
         IO.print("- 6 / luo-tiedosto                    luo BibTex-tiedoston lisätyistä viitteistä");
         IO.print("- 7 / palaa                           lopettaa viitteiden lisäämisen BibTexTiedostoon");
